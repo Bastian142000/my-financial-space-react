@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { NavLink, redirect, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { login } from "../../../services/auth";
+import { useDispatch } from "react-redux";
+import { setLogin } from "./AuthSlice";
 import Button from "../../../ui/Button";
 import AuthForm from "./AuthForm";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("test@example.cl");
   const [password, setPassword] = useState("test123");
-  const [accessToken, setAccessToken] = useState("test123");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -29,7 +32,7 @@ export default function LoginForm() {
       }
 
       if (status === 200) {
-        setAccessToken(data.accessToken);
+        dispatch(setLogin(data.accessToken, data.username));
         navigate("/app/dashboard");
       }
     } catch (e) {
