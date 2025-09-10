@@ -3,6 +3,7 @@ import { Login, Register } from "./features/auth";
 import { Dashboard } from "./features/dashboard";
 import { Categories } from "./features/categories";
 import { Transactions } from "./features/transactions";
+import { transactionsLoader } from "./features/transactions/components/loader";
 import ProtectedPage from "./ui/ProtectedPage";
 
 export const router = createBrowserRouter([
@@ -19,7 +20,11 @@ export const router = createBrowserRouter([
     element: <ProtectedPage />,
     children: [
       { path: "dashboard", element: <Dashboard /> },
-      { path: "transactions", element: <Transactions /> },
+      {
+        path: "transactions",
+        element: <Transactions />,
+        loader: transactionsLoader,
+      },
       { path: "categories", element: <Categories /> },
     ],
   },
