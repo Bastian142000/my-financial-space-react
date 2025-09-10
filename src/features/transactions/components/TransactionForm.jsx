@@ -3,6 +3,7 @@ export default function TransactionForm({
   category,
   type,
   amount,
+  categories,
   onDescriptionChange,
   onCategoryChange,
   onTypeChange,
@@ -29,13 +30,19 @@ export default function TransactionForm({
         <div className="inline-flex gap-5">
           <div className="flex flex-col gap-5">
             <label for="category">Category</label>
+
             <select
               id="category"
               className="w-32 rounded-xl border border-gray-200 p-2"
               value={category}
               onChange={onCategoryChange}
             >
-              <option>WA</option>
+              {categories &&
+                categories.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.category_name}
+                  </option>
+                ))}
             </select>
           </div>
 

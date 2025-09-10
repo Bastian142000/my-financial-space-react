@@ -8,10 +8,52 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createTransaction } from "../../../services/transactions";
+import { fetchCategories } from "../../../services/categories";
 
 export default function Transactions() {
   const [isOpen, setIsOpen] = useState(true);
+  const [description, setDescription] = useState("Card");
+  const [category, setCategory] = useState(0);
+  const [type, setType] = useState("EXPENSE");
+  const [amount, setAmount] = useState(1000);
+  const [categories, setCategories] = useState([]);
+
+  const handleDescriptionChange = (e) => setDescription(e.target.value);
+  const handleCategoryChange = (e) => setCategory(Number(e.target.value));
+  const handleTypeChange = (e) => setType(e.target.value);
+  const handleAmountChange = (e) => setAmount(e.target.value);
+
+  useEffect(() => {
+    try {
+      async function getCategories() {
+        const { status, data, error } = await fetchCategories();
+
+        if (error) return;
+
+        if (status === 200) setCategories(data.categories);
+
+        if (data.categories.length > 0) {
+          setCategory(Number(data.categories[0].id));
+        }
+      }
+      getCategories();
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  async function handleSubmit() {
+    const { status, data, error } = await createTransaction(
+      description,
+      category,
+      type,
+      amount,
+      6,
+    );
+  }
+
   return (
     <div className="mt-5 flex h-11/12 max-w-screen flex-col overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:overflow-x-hidden">
       <div className="m-7 flex flex-col gap-3 px-7 text-2xl">
@@ -27,8 +69,19 @@ export default function Transactions() {
           btnText={"Add transaction"}
           open={isOpen}
           handleIsOpen={(isOpen) => setIsOpen(!isOpen)}
+          onClick={handleSubmit}
         >
-          <TransactionForm></TransactionForm>
+          <TransactionForm
+            description={description}
+            category={category}
+            type={type}
+            amount={amount}
+            categories={categories}
+            onDescriptionChange={handleDescriptionChange}
+            onCategoryChange={handleCategoryChange}
+            onTypeChange={handleTypeChange}
+            onAmountChange={handleAmountChange}
+          />
         </CustomModal>
       </div>
 
