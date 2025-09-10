@@ -5,10 +5,12 @@ export default function Button({
   textColor,
   hoverTextColor,
   hoverBgColor,
+  onClick,
 }) {
   return (
     <button
-      className={`cursor-pointer rounded-xl border ${borderColor} p-2 font-semibold ${textColor} uppercase transition duration-300 ease-in-out ${hoverBgColor} ${hoverTextColor} ${width} `}
+      onClick={onClick}
+      className={`cursor-pointer rounded-2xl border ${borderColor} p-2 font-semibold ${textColor} text-lg transition duration-300 ease-in-out ${hoverBgColor} ${hoverTextColor} ${width} `}
     >
       {children}
     </button>

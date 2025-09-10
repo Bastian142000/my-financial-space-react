@@ -19,12 +19,12 @@ export default function Transaction({ transaction }) {
       </TableCell>
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
         {transaction.date}
-      </TableCell>{" "}
+      </TableCell>
       <TableCell>
         <div className="flex justify-center gap-5">
           <span className="hover:text-red-500">
             <DeleteForeverIcon />
-          </span>{" "}
+          </span>
           <span className="hover:text-yellow-500">
             <EditNoteIcon />
           </span>
