@@ -1,23 +1,22 @@
-import { TableBody, TableCell, TableRow } from "@mui/material";
 import Transaction from "./Transaction";
-import { useState } from "react";
+import { TableBody, TableCell, TableRow } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router";
 
 export default function TransactionList() {
   const [transactions, setTransactions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+
+  const { data, error } = useLoaderData();
+
+  useEffect(() => {
+    if (data?.transactions) setTransactions(data?.transactions);
+  }, [data?.transactions]);
 
   return (
     <TableBody>
-      {isLoading && (
-        <TableRow>
-          <TableCell colSpan={5}>Loading...</TableCell>
-        </TableRow>
-      )}
-
       {error && (
         <TableRow>
-          <TableCell colSpan={5}>Error loading transactions</TableCell>
+          <TableCell colSpan={6}>Error loading transactions</TableCell>
         </TableRow>
       )}
 

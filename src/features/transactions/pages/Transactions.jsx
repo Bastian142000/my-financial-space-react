@@ -32,15 +32,16 @@ export default function Transactions() {
         </Button>
       </div>
 
-      <TableContainer className="mx-auto mt-3 flex max-w-11/12 rounded-md border border-gray-100 shadow-sm">
+      <TableContainer className="mx-auto mt-3 flex max-w-11/12 cursor-pointer rounded-md border border-gray-100 shadow-sm">
         <Table>
-          <TableHead className="bg-albescent-white-50">
+          <TableHead className="bg-blue-chalk-100">
             <TableRow>
-              <TableCell>Description</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell sx={{ fontSize: "16px" }}>Description</TableCell>
+              <TableCell sx={{ fontSize: "16px" }}>Category</TableCell>
+              <TableCell sx={{ fontSize: "16px" }}>Type</TableCell>
+              <TableCell sx={{ fontSize: "16px" }}>Amount $</TableCell>
+              <TableCell sx={{ fontSize: "16px" }}>Date</TableCell>
+              <TableCell sx={{ fontSize: "16px" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TransactionList />
