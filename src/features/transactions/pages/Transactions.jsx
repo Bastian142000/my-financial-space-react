@@ -4,7 +4,8 @@ import TransactionTable from "../components/TransactionTable";
 import { useEffect, useState } from "react";
 import { createTransaction } from "../../../services/transactions";
 import { fetchCategories } from "../../../services/categories";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addTransaction } from "../../transactions/components/TransactionsSlice";
 import TransactionList from "../components/TransactionList";
 
 export default function Transactions() {
@@ -17,6 +18,7 @@ export default function Transactions() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const dispatch = useDispatch();
   const user_id = useSelector((state) => state.auth.user_id);
 
   const handleDescriptionChange = (e) => setDescription(e.target.value);
@@ -52,34 +54,28 @@ export default function Transactions() {
 
   function cleanInputs() {
     setDescription("");
-    setCategory(0);
-    setType("");
+    setCategory(1);
+    setType("INCOME");
     setAmount(0);
   }
 
   async function handleSubmit(e) {
-    console.log("handleSubmit fue llamado");
     e.preventDefault();
-    setIsLoading(true);
-    const { status, data, error } = await createTransaction(
+
+    const payload = {
       description,
-      category,
+      category_id: category,
       type,
       amount,
       user_id,
-    );
+    };
 
-    if (error) {
-      setError(error);
-      setIsLoading(false);
-      return;
-    }
-
-    if (status === 201) {
+    try {
+      await dispatch(addTransaction(payload)).unwrap();
       cleanInputs();
+    } catch (err) {
+      console.error("Error adding transaction:", err);
     }
-
-    setIsLoading(false);
   }
 
   return (

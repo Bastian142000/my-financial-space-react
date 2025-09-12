@@ -1,31 +1,45 @@
 import Transaction from "./Transaction";
 import { TableCell, TableRow } from "@mui/material";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoaderData } from "react-router";
+import { loadTransactions } from "./TransactionsSlice";
 
-export default function TransactionList({ transactions, setTransactions }) {
-  const { data, error } = useLoaderData();
+export default function TransactionList() {
+  const { transactions, status, error } = useSelector(
+    (state) => state.transactions,
+  );
+
+  const { data } = useLoaderData();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data?.transactions) setTransactions(data?.transactions);
-  }, [data?.transactions, setTransactions]);
+    if (data?.transactions) dispatch(loadTransactions(data?.transactions));
+  }, [data?.transactions, dispatch]);
 
-  if (error) {
+  if (status === "loading") {
     return (
-      <TableRow key={"error-row"}>
-        <TableCell colSpan={6}>Error loading transactions</TableCell>
+      <TableRow>
+        <TableCell colSpan={6}>Loading...</TableCell>
+      </TableRow>
+    );
+  }
+
+  if (status === "failed") {
+    return (
+      <TableRow>
+        <TableCell colSpan={6}>Error: {error}</TableCell>
       </TableRow>
     );
   }
 
   return (
     <>
-      {transactions &&
-        transactions.map((transaction) => (
-          <TableRow key={transaction.id}>
-            <Transaction transaction={transaction} />
-          </TableRow>
-        ))}
+      {transactions.map((transaction) => (
+        <TableRow key={transaction.id}>
+          <Transaction transaction={transaction} />
+        </TableRow>
+      ))}
     </>
   );
 }
