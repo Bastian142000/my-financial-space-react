@@ -2,9 +2,9 @@ import Box from "@mui/material/Box";
 import Button from "./Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 
 const style = {
   position: "absolute",
@@ -27,6 +27,7 @@ export default function CustomModal({ btnText, title, onClick, children }) {
   const handleClose = () => setOpen(false);
   return (
     <div>
+      {/* Open modal */}
       <Button
         width={"w-fit"}
         borderColor={"border-purple-300"}
@@ -37,9 +38,11 @@ export default function CustomModal({ btnText, title, onClick, children }) {
       >
         {btnText}
       </Button>
+
+      {/* Modal */}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          {/* Title and close button */}
+          {/* Title and upper close button */}
           <Box
             sx={{
               display: "flex",
@@ -57,35 +60,34 @@ export default function CustomModal({ btnText, title, onClick, children }) {
           </Box>
 
           {/* Content */}
-          <Typography id="modal-modal-description">
-            <div className="rounded-2xl border border-gray-200">
-              {children}
+          <div className="rounded-2xl border border-gray-200">
+            {children}
 
-              <div className="mb-5 flex justify-center gap-5">
-                <Button
-                  width={"w-20"}
-                  borderColor={"border-red-600"}
-                  textColor={"text-red-500"}
-                  hoverBgColor={"hover:bg-red-600"}
-                  hoverTextColor={"hover:text-white"}
-                  onClick={handleClose}
-                >
-                  Cancel
-                </Button>
+            {/* Bottom buttons */}
+            <div className="mb-5 flex justify-center gap-5">
+              <Button
+                width={"w-20"}
+                borderColor={"border-red-600"}
+                textColor={"text-red-500"}
+                hoverBgColor={"hover:bg-red-600"}
+                hoverTextColor={"hover:text-white"}
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
 
-                <Button
-                  width={"w-20"}
-                  borderColor={"border-green-600"}
-                  textColor={"text-green-500"}
-                  hoverBgColor={"hover:bg-green-600"}
-                  hoverTextColor={"hover:text-white"}
-                  onClick={onClick}
-                >
-                  Save
-                </Button>
-              </div>
+              <Button
+                width={"w-20"}
+                borderColor={"border-green-600"}
+                textColor={"text-green-500"}
+                hoverBgColor={"hover:bg-green-600"}
+                hoverTextColor={"hover:text-white"}
+                onClick={onClick}
+              >
+                Save
+              </Button>
             </div>
-          </Typography>
+          </div>
         </Box>
       </Modal>
     </div>
