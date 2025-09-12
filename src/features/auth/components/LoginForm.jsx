@@ -13,7 +13,6 @@ export default function LoginForm() {
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => setEmail(e.target.value);
@@ -32,7 +31,7 @@ export default function LoginForm() {
       }
 
       if (status === 200) {
-        dispatch(setLogin(data.accessToken, data.username));
+        dispatch(setLogin(data.user_id, data.accessToken, data.username));
         navigate("/app/dashboard");
       }
     } catch (e) {

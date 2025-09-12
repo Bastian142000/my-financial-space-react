@@ -1,31 +1,31 @@
 import Transaction from "./Transaction";
-import { TableBody, TableCell, TableRow } from "@mui/material";
-import { useEffect, useState } from "react";
+import { TableCell, TableRow } from "@mui/material";
+import { useEffect } from "react";
 import { useLoaderData } from "react-router";
 
-export default function TransactionList() {
-  const [transactions, setTransactions] = useState([]);
-
+export default function TransactionList({ transactions, setTransactions }) {
   const { data, error } = useLoaderData();
 
   useEffect(() => {
     if (data?.transactions) setTransactions(data?.transactions);
-  }, [data?.transactions]);
+  }, [data?.transactions, setTransactions]);
+
+  if (error) {
+    return (
+      <TableRow key={"error-row"}>
+        <TableCell colSpan={6}>Error loading transactions</TableCell>
+      </TableRow>
+    );
+  }
 
   return (
-    <TableBody>
-      {error && (
-        <TableRow>
-          <TableCell colSpan={6}>Error loading transactions</TableCell>
-        </TableRow>
-      )}
-
+    <>
       {transactions &&
         transactions.map((transaction) => (
           <TableRow key={transaction.id}>
             <Transaction transaction={transaction} />
           </TableRow>
         ))}
-    </TableBody>
+    </>
   );
 }

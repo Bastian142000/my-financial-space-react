@@ -1,29 +1,35 @@
-import TransactionList from "../components/TransactionList";
 import CustomModal from "../../../ui/CustomModal";
 import TransactionForm from "../components/TransactionForm";
-import {
-  Table,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import TransactionTable from "../components/TransactionTable";
 import { useEffect, useState } from "react";
 import { createTransaction } from "../../../services/transactions";
 import { fetchCategories } from "../../../services/categories";
+import { useSelector } from "react-redux";
+import TransactionList from "../components/TransactionList";
 
 export default function Transactions() {
-  const [isOpen, setIsOpen] = useState(true);
-  const [description, setDescription] = useState("Card");
-  const [category, setCategory] = useState(0);
-  const [type, setType] = useState("EXPENSE");
-  const [amount, setAmount] = useState(1000);
+  const [transactions, setTransactions] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(0);
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("INCOME");
+  const [amount, setAmount] = useState(0);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const user_id = useSelector((state) => state.auth.user_id);
 
   const handleDescriptionChange = (e) => setDescription(e.target.value);
   const handleCategoryChange = (e) => setCategory(Number(e.target.value));
   const handleTypeChange = (e) => setType(e.target.value);
-  const handleAmountChange = (e) => setAmount(e.target.value);
+  const handleAmountChange = (e) => {
+    let value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      if (value === "" || (Number(value) >= 1 && Number(value) <= 999999999)) {
+        setAmount(Number(e.target.value));
+      }
+    }
+  };
 
   useEffect(() => {
     try {
@@ -44,18 +50,41 @@ export default function Transactions() {
     }
   }, []);
 
-  async function handleSubmit() {
+  function cleanInputs() {
+    setDescription("");
+    setCategory(0);
+    setType("");
+    setAmount(0);
+  }
+
+  async function handleSubmit(e) {
+    console.log("handleSubmit fue llamado");
+    e.preventDefault();
+    setIsLoading(true);
     const { status, data, error } = await createTransaction(
       description,
       category,
       type,
       amount,
-      6,
+      user_id,
     );
+
+    if (error) {
+      setError(error);
+      setIsLoading(false);
+      return;
+    }
+
+    if (status === 201) {
+      cleanInputs();
+    }
+
+    setIsLoading(false);
   }
 
   return (
     <div className="mt-5 flex h-11/12 max-w-screen flex-col overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:overflow-x-hidden">
+      {/* Title and Subtitle */}
       <div className="m-7 flex flex-col gap-3 px-7 text-2xl">
         <h1 className="font-semibold">Add new transactions</h1>
         <h2 className="text-base text-gray-600">
@@ -63,12 +92,11 @@ export default function Transactions() {
         </h2>
       </div>
 
+      {/* Modal with form */}
       <div className="mx-auto flex w-11/12 justify-end">
         <CustomModal
           title={"Register a new transaction"}
           btnText={"Add transaction"}
-          open={isOpen}
-          handleIsOpen={(isOpen) => setIsOpen(!isOpen)}
           onClick={handleSubmit}
         >
           <TransactionForm
@@ -85,21 +113,13 @@ export default function Transactions() {
         </CustomModal>
       </div>
 
-      <TableContainer className="mx-auto mt-3 flex max-w-11/12 cursor-pointer rounded-md border border-gray-100 shadow-sm">
-        <Table>
-          <TableHead className="bg-blue-chalk-100">
-            <TableRow>
-              <TableCell sx={{ fontSize: "16px" }}>Description</TableCell>
-              <TableCell sx={{ fontSize: "16px" }}>Category</TableCell>
-              <TableCell sx={{ fontSize: "16px" }}>Type</TableCell>
-              <TableCell sx={{ fontSize: "16px" }}>Amount $</TableCell>
-              <TableCell sx={{ fontSize: "16px" }}>Date</TableCell>
-              <TableCell sx={{ fontSize: "16px" }}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TransactionList />
-        </Table>
-      </TableContainer>
+      {/* Table UI */}
+      <TransactionTable>
+        <TransactionList
+          transactions={transactions}
+          setTransactions={setTransactions}
+        />
+      </TransactionTable>
     </div>
   );
 }

@@ -14,7 +14,8 @@ export default function TransactionForm({
   return (
     <form onSubmit={onSubmit} className="pt-10">
       <div className="flex flex-col items-center gap-5">
-        <label for="description" className="w-68">
+        {/* Input Description */}
+        <label htmlFor="description" className="w-68">
           Description
         </label>
         <input
@@ -27,10 +28,11 @@ export default function TransactionForm({
           maxLength={50}
         ></input>
 
+        {/* Form group */}
         <div className="inline-flex gap-5">
+          {/* Input Category */}
           <div className="flex flex-col gap-5">
-            <label for="category">Category</label>
-
+            <label htmlFor="category">Category</label>
             <select
               id="category"
               className="w-32 rounded-xl border border-gray-200 p-2"
@@ -46,36 +48,39 @@ export default function TransactionForm({
             </select>
           </div>
 
+          {/* Input Type */}
           <div className="flex flex-col gap-5">
-            <label for="type">Type</label>
+            <label htmlFor="type">Type</label>
             <select
               id="type"
               className="w-32 rounded-xl border border-gray-200 p-2"
               value={type}
               onChange={onTypeChange}
             >
-              <option>INCOME</option>
-              <option>EXPENSE</option>
+              <option value={"INCOME"}>INCOME</option>
+              <option value={"EXPENSE"}>EXPENSE</option>
             </select>
           </div>
         </div>
 
-        <label for="amount" className="w-68">
+        {/* Input Amount */}
+        <label htmlFor="amount" className="w-68">
           Amount
         </label>
         <input
           id="amount"
           className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
-          type="number"
+          type="text"
+          pattern="(?:0|[1-9]\d*)"
+          inputMode="decimal"
+          autoComplete="off"
           placeholder="Amount"
           value={amount}
           onChange={onAmountChange}
-          min={0}
-          max={999999999}
-          step={1}
         ></input>
       </div>
 
+      {/* Content */}
       <div className="mt-4 flex justify-center gap-5">{children}</div>
     </form>
   );
