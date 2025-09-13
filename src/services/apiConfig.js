@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "../store";
 import { refreshToken } from "./auth";
-import { setLogin } from "../features/auth/components/AuthSlice";
+import { setLogin, setLogout } from "../features/auth/components/AuthSlice";
 
 const api = axios.create({
   baseURL: "http://localhost:4000/api/v1",
@@ -37,11 +37,18 @@ api.interceptors.response.use(
 
         if (status === 200) {
           originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-          store.dispatch(setLogin(data.accessToken, data.username));
+          store.dispatch(
+            setLogin(data.user_id, data.accessToken, data.username),
+          );
+        } else {
+          store.dispatch(setLogout());
+          window.location.href = "/";
         }
 
         return api(originalRequest);
       } catch (refreshError) {
+        store.dispatch(setLogout());
+        window.location.href = "/";
         return Promise.reject(refreshError);
       }
     }
