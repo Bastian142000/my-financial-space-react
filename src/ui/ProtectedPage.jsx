@@ -1,21 +1,11 @@
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { CircularProgress } from "@mui/material";
-import { useNavigation, Outlet, useNavigate } from "react-router";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useNavigation, Outlet } from "react-router";
 
 export default function ProtectedPage() {
-  const navigate = useNavigate();
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
 
   return (
     <div>

@@ -1,23 +1,20 @@
 import CustomModal from "../../../ui/CustomModal";
 import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
-import { useEffect, useState } from "react";
-import { createTransaction } from "../../../services/transactions";
-import { fetchCategories } from "../../../services/categories";
+import TransactionList from "../components/TransactionList";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTransaction } from "../../transactions/components/TransactionsSlice";
-import TransactionList from "../components/TransactionList";
+import useCategories from "../../../hooks/useCategories";
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState(0);
   const [description, setDescription] = useState("");
   const [type, setType] = useState("INCOME");
   const [amount, setAmount] = useState(0);
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
+  const { categories, category, setCategory, error, isLoading } =
+    useCategories();
   const dispatch = useDispatch();
   const user_id = useSelector((state) => state.auth.user_id);
 
@@ -33,24 +30,11 @@ export default function Transactions() {
     }
   };
 
-  useEffect(() => {
-    try {
-      async function getCategories() {
-        const { status, data, error } = await fetchCategories();
+  if (error) {
+    return <span>{error}</span>;
+  }
 
-        if (error) return;
-
-        if (status === 200) setCategories(data.categories);
-
-        if (data.categories.length > 0) {
-          setCategory(Number(data.categories[0].id));
-        }
-      }
-      getCategories();
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+  if (isLoading) return <span>Loading...</span>;
 
   function cleanInputs() {
     setDescription("");
