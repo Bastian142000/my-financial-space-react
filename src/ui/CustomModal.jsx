@@ -21,7 +21,19 @@ const style = {
   overflowY: "auto",
 };
 
-export default function CustomModal({ btnText, title, onClick, children }) {
+export default function CustomModal({
+  btnText,
+  title,
+  onClick,
+  status,
+  modalBorderColor,
+  btnWidth,
+  btnBorderColor,
+  btnTextColor,
+  btnHoverBgColor,
+  btnHoverTextColor,
+  children,
+}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -29,11 +41,11 @@ export default function CustomModal({ btnText, title, onClick, children }) {
     <div>
       {/* Open modal */}
       <Button
-        width={"w-fit"}
-        borderColor={"border-purple-300"}
-        textColor={"text-purple-600"}
-        hoverBgColor={"hover:bg-purple-300"}
-        hoverTextColor={"hover:text-white"}
+        width={btnWidth}
+        borderColor={btnBorderColor}
+        textColor={btnTextColor}
+        hoverBgColor={btnHoverBgColor}
+        hoverTextColor={btnHoverTextColor}
         onClick={handleOpen}
       >
         {btnText}
@@ -60,7 +72,7 @@ export default function CustomModal({ btnText, title, onClick, children }) {
           </Box>
 
           {/* Content */}
-          <div className="rounded-2xl border border-gray-200">
+          <div className={`rounded-2xl border ${modalBorderColor}`}>
             {children}
 
             {/* Bottom buttons */}
@@ -82,6 +94,7 @@ export default function CustomModal({ btnText, title, onClick, children }) {
                 textColor={"text-green-500"}
                 hoverBgColor={"hover:bg-green-600"}
                 hoverTextColor={"hover:text-white"}
+                disabled={status === "loading"}
                 onClick={async () => {
                   try {
                     await onClick();
@@ -91,7 +104,7 @@ export default function CustomModal({ btnText, title, onClick, children }) {
                   }
                 }}
               >
-                Save
+                {status === "loading" ? "Loading..." : "Confirm"}
               </Button>
             </div>
           </div>

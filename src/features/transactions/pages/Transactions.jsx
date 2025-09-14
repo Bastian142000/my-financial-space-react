@@ -5,7 +5,7 @@ import TransactionList from "../components/TransactionList";
 import useCategories from "../../../hooks/useCategories";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTransaction } from "../../transactions/components/TransactionsSlice";
+import { addTransaction } from "../components/TransactionThunks";
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -13,16 +13,15 @@ export default function Transactions() {
   const [type, setType] = useState("INCOME");
   const [amount, setAmount] = useState(0);
 
-  const { categories, category, setCategory, error, isLoading } =
-    useCategories();
+  const transactionStatus = useSelector((state) => state.transactions.status);
+  const transactionError = useSelector((state) => state.transactions.error);
+  const { categories, category, setCategory } = useCategories();
   const dispatch = useDispatch();
   const user_id = useSelector((state) => state.auth.user_id);
 
-  if (error) {
-    return <span>{error}</span>;
+  if (transactionError) {
+    return <span>{transactionError}</span>;
   }
-
-  if (isLoading) return <span>Loading...</span>;
 
   function cleanInputs() {
     setDescription("");
@@ -63,7 +62,14 @@ export default function Transactions() {
       <div className="mx-auto flex w-11/12 justify-end">
         <CustomModal
           title={"Register a new transaction"}
+          modalBorderColor={"border-gray-300"}
           btnText={"Add transaction"}
+          btnWidth={"w-fit"}
+          btnBorderColor={"border-purple-300"}
+          btnTextColor={"text-purple-600"}
+          btnHoverBgColor={"hover:bg-purple-300"}
+          btnHoverTextColor={"hover:text-white"}
+          status={transactionStatus}
           onClick={handleSubmit}
         >
           <TransactionForm

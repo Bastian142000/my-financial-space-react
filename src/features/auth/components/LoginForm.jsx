@@ -65,6 +65,7 @@ export default function LoginForm() {
         textColor={"text-purple-600"}
         hoverBgColor={"hover:bg-purple-300"}
         hoverTextColor={"hover:text-white"}
+        disabled={isLoading}
       >
         {isLoading ? "Loading..." : "Login"}
       </Button>
