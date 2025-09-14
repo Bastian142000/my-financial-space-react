@@ -82,7 +82,14 @@ export default function CustomModal({ btnText, title, onClick, children }) {
                 textColor={"text-green-500"}
                 hoverBgColor={"hover:bg-green-600"}
                 hoverTextColor={"hover:text-white"}
-                onClick={onClick}
+                onClick={async () => {
+                  try {
+                    await onClick();
+                    handleClose();
+                  } catch (err) {
+                    console.error(err);
+                  }
+                }}
               >
                 Save
               </Button>

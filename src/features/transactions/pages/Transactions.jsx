@@ -2,10 +2,10 @@ import CustomModal from "../../../ui/CustomModal";
 import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
 import TransactionList from "../components/TransactionList";
+import useCategories from "../../../hooks/useCategories";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTransaction } from "../../transactions/components/TransactionsSlice";
-import useCategories from "../../../hooks/useCategories";
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -17,18 +17,6 @@ export default function Transactions() {
     useCategories();
   const dispatch = useDispatch();
   const user_id = useSelector((state) => state.auth.user_id);
-
-  const handleDescriptionChange = (e) => setDescription(e.target.value);
-  const handleCategoryChange = (e) => setCategory(Number(e.target.value));
-  const handleTypeChange = (e) => setType(e.target.value);
-  const handleAmountChange = (e) => {
-    let value = e.target.value;
-    if (/^\d*$/.test(value)) {
-      if (value === "" || (Number(value) >= 1 && Number(value) <= 999999999)) {
-        setAmount(Number(e.target.value));
-      }
-    }
-  };
 
   if (error) {
     return <span>{error}</span>;
@@ -43,9 +31,7 @@ export default function Transactions() {
     setAmount(0);
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-
+  async function handleSubmit() {
     const payload = {
       description,
       category_id: category,
@@ -59,6 +45,7 @@ export default function Transactions() {
       cleanInputs();
     } catch (err) {
       console.error("Error adding transaction:", err);
+      throw err;
     }
   }
 
@@ -85,10 +72,10 @@ export default function Transactions() {
             type={type}
             amount={amount}
             categories={categories}
-            onDescriptionChange={handleDescriptionChange}
-            onCategoryChange={handleCategoryChange}
-            onTypeChange={handleTypeChange}
-            onAmountChange={handleAmountChange}
+            setDescription={setDescription}
+            setCategory={setCategory}
+            setType={setType}
+            setAmount={setAmount}
           />
         </CustomModal>
       </div>
