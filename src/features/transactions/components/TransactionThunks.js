@@ -40,3 +40,22 @@ export const deleteTransaction = createAsyncThunk(
     }
   },
 );
+
+export const deleteTransactions = createAsyncThunk(
+  "transactions/deleteTransactions",
+  async (ids, thunkAPI) => {
+    try {
+      const res = await api.delete(`/transactions`, {
+        data: { ids },
+      });
+      return res.data.deletedIds;
+    } catch (err) {
+      const message =
+        err.response?.data?.message ??
+        err.response?.data ??
+        err.message ??
+        "Unknown error";
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);

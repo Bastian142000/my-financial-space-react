@@ -65,9 +65,9 @@ export default function Transactions() {
           modalBorderColor={"border-gray-300"}
           btnText={"Add transaction"}
           btnWidth={"w-fit"}
-          btnBorderColor={"border-purple-300"}
-          btnTextColor={"text-purple-600"}
-          btnHoverBgColor={"hover:bg-purple-300"}
+          btnBorderColor={"border-green-400"}
+          btnTextColor={"text-green-600"}
+          btnHoverBgColor={"hover:bg-green-400"}
           btnHoverTextColor={"hover:text-white"}
           status={transactionStatus}
           onClick={handleSubmit}

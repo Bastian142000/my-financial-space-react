@@ -17,17 +17,17 @@ export default function Sidebar() {
       {/* Sidebar button */}
       <div className="absolute top-5 right-5">
         <button onClick={() => setIsOpen(!isOpen)}>
-          <MenuIcon className="cursor-pointer text-gray-500 transition duration-300 ease-in-out hover:text-purple-400" />
+          <MenuIcon className="cursor-pointer text-gray-500 transition duration-300 ease-in-out hover:text-blue-500" />
         </button>
       </div>
 
       {/* Links */}
       <div className="flex flex-col gap-20 pt-30 pl-4 text-sm">
-        <div className="text-gray-800 transition ease-in-out hover:text-purple-400">
+        <div className="text-gray-800 transition ease-in-out hover:text-blue-500">
           <NavLink
             to={"/app/dashboard"}
             className={({ isActive }) =>
-              `flex items-center ${isActive ? "rounded-l-2xl bg-gradient-to-r from-purple-100 to-purple-400 py-2" : ""}`
+              `flex items-center ${isActive ? "rounded-l-2xl bg-gradient-to-r from-blue-200 to-blue-600 py-2" : ""}`
             }
           >
             <HomeIcon className="mr-4" />
@@ -43,11 +43,11 @@ export default function Sidebar() {
           </NavLink>
         </div>
 
-        <div className="text-gray-800 transition ease-in-out hover:text-purple-400">
+        <div className="text-gray-800 transition ease-in-out hover:text-blue-500">
           <NavLink
             to={"/app/transactions"}
             className={({ isActive }) =>
-              `flex items-center ${isActive ? "rounded-l-2xl bg-gradient-to-r from-purple-100 to-purple-400 py-2" : ""}`
+              `flex items-center ${isActive ? "rounded-l-2xl bg-gradient-to-r from-blue-200 to-blue-600 py-2" : ""}`
             }
           >
             <ArchiveIcon className="mr-4" />
@@ -63,11 +63,11 @@ export default function Sidebar() {
           </NavLink>
         </div>
 
-        <div className="text-gray-800 transition ease-in-out hover:text-purple-400">
+        <div className="text-gray-800 transition ease-in-out hover:text-blue-500">
           <NavLink
             to={"/app/categories"}
             className={({ isActive }) =>
-              `flex items-center ${isActive ? "rounded-l-2xl bg-gradient-to-r from-purple-100 to-purple-400 py-2" : ""}`
+              `flex items-center ${isActive ? "rounded-l-2xl bg-gradient-to-r from-blue-200 to-blue-600 py-2" : ""}`
             }
           >
             <ClassIcon className="mr-4" />
