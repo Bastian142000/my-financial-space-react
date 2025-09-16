@@ -13,7 +13,7 @@ export default function AuthForm({
     <form onSubmit={onSubmit} className="pt-12">
       <div className="flex flex-col items-center gap-5">
         <input
-          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
+          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-blue-100"
           type="email"
           placeholder="Email"
           value={email}
@@ -22,7 +22,7 @@ export default function AuthForm({
 
         {mode === "register" && (
           <input
-            className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
+            className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-blue-100"
             type="text"
             placeholder="Username"
             value={username}
@@ -31,7 +31,7 @@ export default function AuthForm({
         )}
 
         <input
-          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
+          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-blue-100"
           type="password"
           placeholder="Password"
           value={password}

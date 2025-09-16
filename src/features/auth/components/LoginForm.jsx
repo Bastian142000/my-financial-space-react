@@ -55,16 +55,17 @@ export default function LoginForm() {
         </p>
       )}
 
-      <div className="flex py-4 text-purple-400">
+      <div className="flex py-4 text-blue-400">
         <NavLink to="/register">Haven't registered yet?</NavLink>
       </div>
 
       <Button
         width={"w-45"}
-        borderColor={"border-purple-300"}
-        textColor={"text-purple-600"}
-        hoverBgColor={"hover:bg-purple-300"}
+        borderColor={"border-blue-300"}
+        textColor={"text-blue-600"}
+        hoverBgColor={"hover:bg-blue-300"}
         hoverTextColor={"hover:text-white"}
+        disabled={isLoading}
       >
         {isLoading ? "Loading..." : "Login"}
       </Button>

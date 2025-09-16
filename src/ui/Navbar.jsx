@@ -42,7 +42,7 @@ export default function Navbar() {
       {/* Left content */}
       <div className="flex items-center gap-4">
         <img
-          className="cursor-pointer rounded-full border-2 border-purple-200 shadow-sm"
+          className="cursor-pointer rounded-full border-2 border-blue-200 shadow-sm"
           src="/logo.png"
           width={60}
           height={60}
@@ -58,7 +58,7 @@ export default function Navbar() {
         {/* Logo button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-opacity-90 hover:bg-opacity-100 flex cursor-pointer items-center gap-2 rounded-lg bg-white px-3 py-2 shadow transition duration-300 ease-in-out hover:text-violet-500"
+          className="bg-opacity-90 hover:bg-opacity-100 flex cursor-pointer items-center gap-2 rounded-lg bg-white px-3 py-2 shadow transition duration-300 ease-in-out hover:text-blue-500"
           aria-label="User menu"
         >
           <AccountCircleIcon fontSize="large" className="" />
@@ -77,7 +77,7 @@ export default function Navbar() {
               <li>
                 <button
                   onClick={handleLogout}
-                  className="w-full cursor-pointer rounded-lg px-4 py-3 text-left font-semibold uppercase transition hover:bg-violet-100"
+                  className="w-full cursor-pointer rounded-lg px-4 py-3 text-left font-semibold uppercase transition hover:bg-blue-100"
                 >
                   Logout
                 </button>

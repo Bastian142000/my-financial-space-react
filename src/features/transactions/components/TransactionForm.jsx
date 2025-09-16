@@ -1,16 +1,24 @@
+import { validateNumber } from "../../../utils/validateInputNumber";
+
 export default function TransactionForm({
   description,
   category,
   type,
   amount,
   categories,
-  onDescriptionChange,
-  onCategoryChange,
-  onTypeChange,
-  onAmountChange,
+  setDescription,
+  setCategory,
+  setType,
+  setAmount,
   onSubmit,
   children,
 }) {
+  const handleDescriptionChange = (e) => setDescription(e.target.value);
+  const handleCategoryChange = (e) => setCategory(Number(e.target.value));
+  const handleTypeChange = (e) => setType(e.target.value);
+  const handleAmountChange = (e) => {
+    validateNumber(e, setAmount);
+  };
   return (
     <form onSubmit={onSubmit} className="pt-10">
       <div className="flex flex-col items-center gap-5">
@@ -24,7 +32,7 @@ export default function TransactionForm({
           type="text"
           placeholder="Description"
           value={description}
-          onChange={onDescriptionChange}
+          onChange={handleDescriptionChange}
           maxLength={50}
         ></input>
 
@@ -37,7 +45,7 @@ export default function TransactionForm({
               id="category"
               className="w-32 rounded-xl border border-gray-200 p-2"
               value={category}
-              onChange={onCategoryChange}
+              onChange={handleCategoryChange}
             >
               {categories &&
                 categories.map((c) => (
@@ -55,7 +63,7 @@ export default function TransactionForm({
               id="type"
               className="w-32 rounded-xl border border-gray-200 p-2"
               value={type}
-              onChange={onTypeChange}
+              onChange={handleTypeChange}
             >
               <option value={"INCOME"}>INCOME</option>
               <option value={"EXPENSE"}>EXPENSE</option>
@@ -76,7 +84,7 @@ export default function TransactionForm({
           autoComplete="off"
           placeholder="Amount"
           value={amount}
-          onChange={onAmountChange}
+          onChange={handleAmountChange}
         ></input>
       </div>
 
