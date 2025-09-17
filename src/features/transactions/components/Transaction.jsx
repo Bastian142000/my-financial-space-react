@@ -26,6 +26,7 @@ export default function Transaction({
 
   return (
     <>
+      <TableCell></TableCell>
       <SelectTransaction
         transaction={transaction}
         selectedItems={selectedItems}
