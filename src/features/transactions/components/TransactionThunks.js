@@ -1,11 +1,51 @@
 import api from "../../../services/apiConfig";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+export const fetchTransactions = createAsyncThunk(
+  "transactions/fetchTransactions",
+  async (_, thunkAPI) => {
+    try {
+      const res = await api.get("/transactions");
+      return res.data.transactions;
+    } catch (err) {
+      const message =
+        err.response?.data?.message ??
+        err.response?.data ??
+        err.message ??
+        "Unknown error";
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 export const addTransaction = createAsyncThunk(
   "transactions/addTransaction",
   async ({ description, category_id, type, amount, user_id }, thunkAPI) => {
     try {
       const res = await api.post("/transactions", {
+        description,
+        category_id,
+        type,
+        amount,
+        user_id,
+      });
+      return res.data.transaction;
+    } catch (err) {
+      const message =
+        err.response?.data?.message ??
+        err.response?.data ??
+        err.message ??
+        "Unknown error";
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
+export const updateTransaction = createAsyncThunk(
+  "transactions/updateTransaction",
+  async ({ id, description, category_id, type, amount, user_id }, thunkAPI) => {
+    try {
+      const res = await api.patch(`/transactions/${id}`, {
         description,
         category_id,
         type,

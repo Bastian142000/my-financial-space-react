@@ -1,27 +1,23 @@
 import TransactionTable from "../components/TransactionTable";
 import TransactionList from "../components/TransactionList";
 import AddTransactionModal from "../components/AddTransactionModal";
-import { TableCell, TableRow } from "@mui/material";
-import { useEffect, useState } from "react";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import CustomModal from "../../../ui/CustomModal";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoaderData } from "react-router";
-import { loadTransactions } from "../components/TransactionsSlice";
 import { deleteTransactions } from "../components/TransactionThunks";
+import { useLoadTransactions } from "../hooks/useLoadTransactions";
 
 export default function Transactions() {
+  useLoadTransactions();
+
   const [selectedItems, setSelectedItems] = useState([]);
 
   const { transactions, status, error } = useSelector(
     (state) => state.transactions,
   );
 
-  const { data } = useLoaderData();
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (data?.transactions) dispatch(loadTransactions(data?.transactions));
-  }, [data?.transactions, dispatch]);
 
   function handleCheckboxChange(e) {
     const id = Number(e.target.value);
@@ -59,19 +55,11 @@ export default function Transactions() {
     selectedItems.length > 0 && selectedItems.length < transactions.length;
 
   if (status === "loading") {
-    return (
-      <TableRow>
-        <TableCell colSpan={6}>Loading...</TableCell>
-      </TableRow>
-    );
+    return <span>Loading...</span>;
   }
 
   if (status === "failed") {
-    return (
-      <TableRow>
-        <TableCell colSpan={6}>Error: {error}</TableCell>
-      </TableRow>
-    );
+    return <span>Error: {error}</span>;
   }
 
   return (
@@ -87,6 +75,20 @@ export default function Transactions() {
       {/* Modal with form */}
       <div className="mx-auto flex w-11/12 justify-end">
         <AddTransactionModal />
+        {selectedItems.length > 1 && (
+          <div className="flex h-10 items-center">
+            <CustomModal
+              title={"Delete all selected transactions?"}
+              modalBorderColor={"border-none"}
+              btnBorderColor={"border-none"}
+              btnText={<DeleteForeverIcon fontSize="large" />}
+              btnWidth={"w-fit"}
+              btnTextColor={"text-red-500"}
+              btnHoverTextColor={"hover:text-red-500"}
+              onClick={handleDeleteMany}
+            ></CustomModal>
+          </div>
+        )}
       </div>
 
       {/* Table UI */}
