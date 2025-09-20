@@ -1,51 +1,65 @@
-import CustomModal from "../../../ui/CustomModal";
-import TransactionForm from "../components/TransactionForm";
 import TransactionTable from "../components/TransactionTable";
 import TransactionList from "../components/TransactionList";
-import useCategories from "../../../hooks/useCategories";
+import AddTransactionModal from "../components/AddTransactionModal";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import CustomModal from "../../../ui/CustomModal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTransaction } from "../components/TransactionThunks";
+import { deleteTransactions } from "../components/TransactionThunks";
+import { useLoadTransactions } from "../hooks/useLoadTransactions";
 
 export default function Transactions() {
-  const [transactions, setTransactions] = useState([]);
-  const [description, setDescription] = useState("");
-  const [type, setType] = useState("INCOME");
-  const [amount, setAmount] = useState(0);
+  useLoadTransactions();
 
-  const transactionStatus = useSelector((state) => state.transactions.status);
-  const transactionError = useSelector((state) => state.transactions.error);
-  const { categories, category, setCategory } = useCategories();
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const { transactions, status, error } = useSelector(
+    (state) => state.transactions,
+  );
+
   const dispatch = useDispatch();
-  const user_id = useSelector((state) => state.auth.user_id);
 
-  if (transactionError) {
-    return <span>{transactionError}</span>;
+  function handleCheckboxChange(e) {
+    const id = Number(e.target.value);
+    const checked = e.target.checked;
+
+    setSelectedItems((prev) => {
+      if (checked) {
+        return [...prev, id];
+      } else {
+        return prev.filter((item) => item !== id);
+      }
+    });
   }
 
-  function cleanInputs() {
-    setDescription("");
-    setCategory(1);
-    setType("INCOME");
-    setAmount(0);
-  }
-
-  async function handleSubmit() {
-    const payload = {
-      description,
-      category_id: category,
-      type,
-      amount,
-      user_id,
-    };
-
+  async function handleDeleteMany() {
     try {
-      await dispatch(addTransaction(payload)).unwrap();
-      cleanInputs();
+      await dispatch(deleteTransactions(selectedItems)).unwrap();
     } catch (err) {
-      console.error("Error adding transaction:", err);
+      console.error("Error deleting transactions:", err);
       throw err;
     }
+  }
+
+  function handleSelectAll(e) {
+    if (e.target.checked) {
+      const allIds = transactions.map((t) => Number(t.id));
+      setSelectedItems(allIds);
+    } else {
+      setSelectedItems([]);
+    }
+  }
+  const allSelected =
+    transactions.length > 0 && selectedItems.length === transactions.length;
+  const partiallySelected =
+    selectedItems.length > 0 && selectedItems.length < transactions.length;
+
+  if (status === "loading") {
+    return <span>Loading...</span>;
+  }
+
+  if (status === "failed") {
+    return <span>Error: {error}</span>;
   }
 
   return (
@@ -60,37 +74,35 @@ export default function Transactions() {
 
       {/* Modal with form */}
       <div className="mx-auto flex w-11/12 justify-end">
-        <CustomModal
-          title={"Register a new transaction"}
-          modalBorderColor={"border-gray-300"}
-          btnText={"Add transaction"}
-          btnWidth={"w-fit"}
-          btnBorderColor={"border-green-400"}
-          btnTextColor={"text-green-600"}
-          btnHoverBgColor={"hover:bg-green-400"}
-          btnHoverTextColor={"hover:text-white"}
-          status={transactionStatus}
-          onClick={handleSubmit}
-        >
-          <TransactionForm
-            description={description}
-            category={category}
-            type={type}
-            amount={amount}
-            categories={categories}
-            setDescription={setDescription}
-            setCategory={setCategory}
-            setType={setType}
-            setAmount={setAmount}
-          />
-        </CustomModal>
+        <AddTransactionModal />
+        {selectedItems.length > 1 && (
+          <div className="flex h-10 items-center">
+            <CustomModal
+              title={"Delete all selected transactions?"}
+              modalBorderColor={"border-none"}
+              btnBorderColor={"border-none"}
+              btnText={<DeleteForeverIcon fontSize="large" />}
+              btnWidth={"w-fit"}
+              btnTextColor={"text-red-500"}
+              btnHoverTextColor={"hover:text-red-500"}
+              onClick={handleDeleteMany}
+            ></CustomModal>
+          </div>
+        )}
       </div>
 
       {/* Table UI */}
-      <TransactionTable>
+      <TransactionTable
+        transactions={transactions}
+        allSelected={allSelected}
+        partiallySelected={partiallySelected}
+        onSelectAll={handleSelectAll}
+      >
         <TransactionList
           transactions={transactions}
-          setTransactions={setTransactions}
+          selectedItems={selectedItems}
+          onCheckboxChange={handleCheckboxChange}
+          onDeleteMany={handleDeleteMany}
         />
       </TransactionTable>
     </div>

@@ -1,10 +1,10 @@
+import Button from "../../../ui/Button";
+import AuthForm from "./AuthForm";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { login } from "../../../services/auth";
 import { useDispatch } from "react-redux";
 import { setLogin } from "./AuthSlice";
-import Button from "../../../ui/Button";
-import AuthForm from "./AuthForm";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("test@example.cl");

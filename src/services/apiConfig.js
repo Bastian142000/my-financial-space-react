@@ -12,46 +12,77 @@ const api = axios.create({
   withCredentials: true,
 });
 
+// ---- REFRESH CONTROL ----
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+const subscribeTokenRefresh = (cb) => {
+  refreshSubscribers.push(cb);
+};
+
+const onRefreshed = (newToken) => {
+  refreshSubscribers.forEach((cb) => cb(newToken));
+  refreshSubscribers = [];
+};
+
+// ---- REQUEST ----
 api.interceptors.request.use(
   (config) => {
     const accessToken = store.getState().auth.accessToken;
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
+    if (accessToken) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+    }
     return config;
   },
   (error) => Promise.reject(error),
 );
 
+// ---- RESPONSE ----
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
     if (
-      error.response.status === 401 ||
-      (error.response.status === 403 && !originalRequest._retry)
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      !originalRequest._retry
     ) {
       originalRequest._retry = true;
 
-      try {
-        const { status, data } = await refreshToken();
+      if (!isRefreshing) {
+        isRefreshing = true;
+        try {
+          const { status, data } = await refreshToken();
 
-        if (status === 200) {
-          originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-          store.dispatch(
-            setLogin(data.user_id, data.accessToken, data.username),
-          );
-        } else {
+          if (status === 200) {
+            store.dispatch(
+              setLogin(data.user_id, data.accessToken, data.username),
+            );
+            onRefreshed(data.accessToken);
+          } else {
+            store.dispatch(setLogout());
+            window.location.href = "/";
+          }
+
+          isRefreshing = false;
+        } catch (refreshError) {
+          isRefreshing = false;
           store.dispatch(setLogout());
           window.location.href = "/";
+          return Promise.reject(refreshError);
         }
-
-        return api(originalRequest);
-      } catch (refreshError) {
-        store.dispatch(setLogout());
-        window.location.href = "/";
-        return Promise.reject(refreshError);
       }
+
+      // Espera a que termine el refresh
+      return new Promise((resolve) => {
+        subscribeTokenRefresh((newToken) => {
+          originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+          resolve(api(originalRequest));
+        });
+      });
     }
+
+    return Promise.reject(error);
   },
 );
 

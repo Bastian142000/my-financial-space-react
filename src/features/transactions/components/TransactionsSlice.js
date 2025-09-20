@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addTransaction,
+  updateTransaction,
   deleteTransaction,
   deleteTransactions,
 } from "./TransactionThunks";
@@ -30,6 +31,28 @@ const TransactionsSlice = createSlice({
         state.transactions.push(action.payload);
       })
       .addCase(addTransaction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(updateTransaction.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(updateTransaction.fulfilled, (state, action) => {
+        state.status = "success";
+        const transaction = {
+          id: action.payload.id,
+          description: action.payload.description,
+          category_id: action.payload.category_id,
+          type: action.payload.type,
+          amount: action.payload.amount,
+          user_id: action.payload.user_id,
+        };
+        state.transactions = state.transactions.map((t) =>
+          t.id === transaction.id ? { ...t, ...transaction } : t,
+        );
+      })
+      .addCase(updateTransaction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
       })
