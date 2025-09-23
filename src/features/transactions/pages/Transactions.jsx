@@ -63,9 +63,9 @@ export default function Transactions() {
   }
 
   return (
-    <div className="mt-5 flex h-11/12 max-w-screen flex-col overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:overflow-x-hidden">
+    <div className="mx-auto mt-5 flex h-11/12 w-8/12 max-w-screen flex-col overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:h-11/12 lg:w-10/12 lg:overflow-x-hidden">
       {/* Title and Subtitle */}
-      <div className="m-7 flex flex-col gap-3 px-7 text-2xl">
+      <div className="m-7 flex flex-col gap-3 overflow-auto px-7 text-2xl">
         <h1 className="font-semibold">Add new transactions</h1>
         <h2 className="text-base text-gray-600">
           Here you can register a new transaction on the current month
@@ -73,7 +73,7 @@ export default function Transactions() {
       </div>
 
       {/* Modal with form */}
-      <div className="mx-auto flex w-11/12 justify-end">
+      <div className="mx-auto flex w-fit justify-end lg:w-11/12">
         <AddTransactionModal />
         {selectedItems.length > 1 && (
           <div className="flex h-10 items-center">

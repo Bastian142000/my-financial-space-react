@@ -89,7 +89,7 @@ export default function CustomModal({
               </Button>
 
               <Button
-                width={"w-20"}
+                width={"w-fit"}
                 borderColor={"border-green-600"}
                 textColor={"text-green-500"}
                 hoverBgColor={"hover:bg-green-600"}

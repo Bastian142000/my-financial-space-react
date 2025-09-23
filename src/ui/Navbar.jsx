@@ -38,27 +38,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="flex h-20 items-center justify-between px-6 shadow-md">
-      {/* Left content */}
-      <div className="flex items-center gap-4">
-        <img
-          className="cursor-pointer rounded-full border-2 border-blue-200 shadow-sm"
-          src="/logo.png"
-          width={60}
-          height={60}
-          alt="Business logo"
-        />
-        <h1 className="hidden text-2xl font-bold uppercase drop-shadow-md sm:block">
-          My Financial Space
-        </h1>
-      </div>
-
+    <div className="flex h-20 w-full items-center justify-end border-none px-6">
       {/* Right content */}
       <div className="relative" ref={dropdownRef}>
         {/* Logo button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-opacity-90 hover:bg-opacity-100 flex cursor-pointer items-center gap-2 rounded-lg bg-white px-3 py-2 shadow transition duration-300 ease-in-out hover:text-blue-500"
+          className="bg-opacity-90 hover:bg-opacity-100 flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 shadow transition duration-300 ease-in-out hover:text-blue-500"
           aria-label="User menu"
         >
           <AccountCircleIcon fontSize="large" className="" />
