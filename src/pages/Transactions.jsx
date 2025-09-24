@@ -1,12 +1,12 @@
-import TransactionTable from "../components/TransactionTable";
-import TransactionList from "../components/TransactionList";
-import AddTransactionModal from "../components/AddTransactionModal";
+import TransactionTable from "../features/transactions/components/TransactionTable";
+import TransactionList from "../features/transactions/components/TransactionList";
+import AddTransactionModal from "../features/transactions/components/AddTransactionModal";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import CustomModal from "../../../ui/CustomModal";
+import CustomModal from "../ui/CustomModal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTransactions } from "../components/TransactionThunks";
-import { useLoadTransactions } from "../hooks/useLoadTransactions";
+import { deleteTransactions } from "../features/transactions/components/TransactionThunks";
+import { useLoadTransactions } from "../features/transactions/hooks/useLoadTransactions";
 
 export default function Transactions() {
   useLoadTransactions();

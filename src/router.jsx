@@ -1,9 +1,10 @@
 import ProtectedPage from "./ui/ProtectedPage";
+import Login from "./pages/LoginPage";
+import Register from "./pages/RegisterPage";
+import Dashboard from "./pages/Dashboard";
+import Categories from "./pages/Categories";
+import Transactions from "./pages/Transactions";
 import { createBrowserRouter } from "react-router";
-import { Login, Register } from "./features/auth";
-import { Dashboard } from "./features/dashboard";
-import { Categories } from "./features/categories";
-import { Transactions } from "./features/transactions";
 
 export const router = createBrowserRouter([
   {
