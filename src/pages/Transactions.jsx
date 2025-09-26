@@ -4,20 +4,9 @@ import AddTransactionModal from "../features/transactions/components/AddTransact
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CustomModal from "../ui/CustomModal";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteTransactions } from "../features/transactions/components/TransactionThunks";
-import { useLoadTransactions } from "../features/transactions/hooks/useLoadTransactions";
 
 export default function Transactions() {
-  useLoadTransactions();
-
   const [selectedItems, setSelectedItems] = useState([]);
-
-  const { transactions, status, error } = useSelector(
-    (state) => state.transactions,
-  );
-
-  const dispatch = useDispatch();
 
   function handleCheckboxChange(e) {
     const id = Number(e.target.value);
@@ -32,35 +21,9 @@ export default function Transactions() {
     });
   }
 
-  async function handleDeleteMany() {
-    try {
-      await dispatch(deleteTransactions(selectedItems)).unwrap();
-    } catch (err) {
-      console.error("Error deleting transactions:", err);
-      throw err;
-    }
-  }
+  async function handleDeleteMany() {}
 
-  function handleSelectAll(e) {
-    if (e.target.checked) {
-      const allIds = transactions.map((t) => Number(t.id));
-      setSelectedItems(allIds);
-    } else {
-      setSelectedItems([]);
-    }
-  }
-  const allSelected =
-    transactions.length > 0 && selectedItems.length === transactions.length;
-  const partiallySelected =
-    selectedItems.length > 0 && selectedItems.length < transactions.length;
-
-  if (status === "loading") {
-    return <span>Loading...</span>;
-  }
-
-  if (status === "failed") {
-    return <span>Error: {error}</span>;
-  }
+  function handleSelectAll(e) {}
 
   return (
     <div className="mx-auto mt-5 flex h-11/12 w-8/12 max-w-screen flex-col overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:h-11/12 lg:w-10/12 lg:overflow-x-hidden">
@@ -92,18 +55,8 @@ export default function Transactions() {
       </div>
 
       {/* Table UI */}
-      <TransactionTable
-        transactions={transactions}
-        allSelected={allSelected}
-        partiallySelected={partiallySelected}
-        onSelectAll={handleSelectAll}
-      >
-        <TransactionList
-          transactions={transactions}
-          selectedItems={selectedItems}
-          onCheckboxChange={handleCheckboxChange}
-          onDeleteMany={handleDeleteMany}
-        />
+      <TransactionTable onSelectAll={handleSelectAll}>
+        <TransactionList />
       </TransactionTable>
     </div>
   );

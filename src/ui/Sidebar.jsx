@@ -43,7 +43,7 @@ export default function Sidebar() {
           >
             <ArchiveIcon fontSize="large" className="mr-4 ml-4" />
             <span className="inline-block origin-left transform text-xl uppercase opacity-0 md:opacity-100">
-              Add new transactions
+              Transactions
             </span>
           </NavLink>
         </li>

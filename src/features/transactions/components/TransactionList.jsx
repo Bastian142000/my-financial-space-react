@@ -1,11 +1,22 @@
 import Transaction from "./Transaction";
+import SpinnerMini from "../../../ui/SpinnerMini";
 import { TableCell, TableRow } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTransactions } from "../../../services/transactions";
 
-export default function TransactionList({
-  transactions,
-  selectedItems,
-  onCheckboxChange,
-}) {
+export default function TransactionList({ selectedItems, onCheckboxChange }) {
+  const {
+    data: transactions,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: fetchTransactions,
+  });
+
+  if (isLoading) return <SpinnerMini />;
+
+  if (error) return <span>{error.message}</span>;
   return (
     <>
       {transactions.length < 1 && (
