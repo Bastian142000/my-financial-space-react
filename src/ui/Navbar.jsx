@@ -3,24 +3,19 @@ import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useRef, useEffect } from "react";
 import { logout } from "../services/auth";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const username = useSelector((state) => state.auth.username);
+  const queryClient = useQueryClient();
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      const { status, error } = await logout();
-
-      if (error) return;
-
-      if (status === 200) navigate("/");
-    } catch (e) {
-      console.error(e);
-    }
+    await logout();
+    queryClient.removeQueries(["user"]);
+    queryClient.removeQueries(["transactions"]);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -48,7 +43,7 @@ export default function Navbar() {
           aria-label="User menu"
         >
           <AccountCircleIcon fontSize="large" className="" />
-          <span className="font-medium">{username}</span>
+          <span className="font-medium"></span>
           <KeyboardArrowDown
             className={`transition-transform duration-300 ${
               isOpen ? "rotate-180" : "rotate-0"

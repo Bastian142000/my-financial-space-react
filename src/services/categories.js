@@ -1,10 +1,12 @@
-import api from "./apiConfig";
+import supabase from "./supabase";
 
 export async function fetchCategories() {
-  try {
-    const res = await api.get("/categories");
-    return { status: res.status, data: res.data, error: null };
-  } catch (error) {
-    return { status: error.response?.status, error: error.message };
+  const { data, error } = await supabase.from("Category").select("*");
+
+  if (error) {
+    console.error(error);
+    throw new Error("Categories could not be loaded");
   }
+
+  return data;
 }

@@ -1,37 +1,38 @@
-import api from "./apiConfig";
+import supabase from "./supabase";
 
-export const login = async (email, password) => {
-  try {
-    const res = await api.post("/auth/login", { email, password });
-    return { status: res.status, data: res.data, error: null };
-  } catch (error) {
-    return { status: error.response?.status, data: null, error: error.message };
-  }
-};
+export async function login({ email, password }) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-export const logout = async () => {
-  try {
-    const res = await api.post("/auth/logout");
-    return { status: res.status, error: null };
-  } catch (error) {
-    return { status: error.response?.status, error: error.message };
+  if (error) {
+    console.error(error);
+    throw new Error("Credentials could not be validated");
   }
-};
 
-export const register = async (email, username, password) => {
-  try {
-    const res = await api.post("/auth/register", { email, username, password });
-    return { status: res.status, data: res.data, error: null };
-  } catch (error) {
-    return { status: error.response?.status, data: null, error: error.message };
-  }
-};
+  return data;
+}
 
-export const refreshToken = async () => {
-  try {
-    const res = await api.post("/auth/refresh");
-    return { status: res.status, data: res.data, error: null };
-  } catch (error) {
-    return { status: error.response?.status, data: null, error: error.message };
+export async function getCurrentUser() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) return null;
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) throw new Error(error.message);
+
+  return data?.user;
+}
+
+export async function logout() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error(error);
+    throw new Error(error.message);
   }
-};
+}

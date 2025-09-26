@@ -3,40 +3,27 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import CustomModal from "../../../ui/CustomModal";
 import SelectTransaction from "./SelectTransaction";
 import { TableCell } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { deleteTransaction } from "./TransactionThunks";
 
 export default function Transaction({
   transaction,
   selectedItems,
   onCheckboxChange,
 }) {
-  const dispatch = useDispatch();
-
-  async function handleDelete() {
-    try {
-      await dispatch(deleteTransaction(transaction.id)).unwrap();
-    } catch (err) {
-      console.error("Error deleting transaction:", err);
-      throw err;
-    }
-  }
+  async function handleDelete() {}
 
   function handleUpdate() {}
 
   return (
     <>
-      <TableCell></TableCell>
       <SelectTransaction
-        transaction={transaction}
         selectedItems={selectedItems}
         onCheckboxChange={onCheckboxChange}
       />
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
-        {transaction.description}
+        {transaction.Category?.category_name}
       </TableCell>
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
-        {transaction.category.category_name}
+        {transaction.description}
       </TableCell>
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
         {transaction.type}
