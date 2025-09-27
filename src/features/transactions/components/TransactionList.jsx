@@ -14,9 +14,24 @@ export default function TransactionList({ selectedItems, onCheckboxChange }) {
     queryFn: fetchTransactions,
   });
 
-  if (isLoading) return <SpinnerMini />;
+  if (isLoading)
+    return (
+      <TableRow>
+        <TableCell colSpan={7} align="center">
+          <SpinnerMini />;
+        </TableCell>
+      </TableRow>
+    );
 
-  if (error) return <span>{error.message}</span>;
+  if (error)
+    return (
+      <TableRow>
+        <TableCell colSpan={7} align="center">
+          {error.message}{" "}
+        </TableCell>
+      </TableRow>
+    );
+
   return (
     <>
       {transactions.length < 1 && (

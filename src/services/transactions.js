@@ -4,7 +4,7 @@ export async function fetchTransactions() {
   const { data, error } = await supabase
     .from("Transaction")
     .select(
-      `description, type, amount, date, category_id, Category (category_name)`,
+      `id,description, type, amount, date, category_id, Category (category_name)`,
     );
 
   if (error) {

@@ -12,7 +12,7 @@ export default function LoginForm() {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const { login, isLoading } = useLogin();
+  const { login, isPending } = useLogin();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -40,9 +40,9 @@ export default function LoginForm() {
         textColor={"text-blue-600"}
         hoverBgColor={"hover:bg-blue-300"}
         hoverTextColor={"hover:text-white"}
-        disabled={isLoading}
+        disabled={isPending}
       >
-        {isLoading ? <SpinnerMini /> : "Login"}
+        {isPending ? <SpinnerMini /> : "Login"}
       </Button>
     </AuthForm>
   );
