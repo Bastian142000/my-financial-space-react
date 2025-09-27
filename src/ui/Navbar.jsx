@@ -1,22 +1,18 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import useUser from "../features/auth/hooks/useUser";
+import useLogout from "../features/auth/hooks/useLogout";
+import SpinnerMini from "./SpinnerMini";
 import { useState, useRef, useEffect } from "react";
-import { logout } from "../services/auth";
-import { useNavigate } from "react-router";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
-  const dropdownRef = useRef(null);
-  const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    await logout();
-    queryClient.removeQueries(["user"]);
-    queryClient.removeQueries(["transactions"]);
-    navigate("/");
-  };
+  const dropdownRef = useRef(null);
+
+  const { user } = useUser();
+
+  const { isPending, logout } = useLogout();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -34,14 +30,14 @@ export default function Navbar() {
 
   return (
     <div className="flex h-20 w-full items-center justify-end border-none px-6">
-      {/* Right content */}
       <div className="relative" ref={dropdownRef}>
         {/* Logo button */}
         <button
-          onClick={() => setIsOpen(!isOpen)}
           className="bg-opacity-90 hover:bg-opacity-100 flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 shadow transition duration-300 ease-in-out hover:text-blue-500"
+          onClick={() => setIsOpen(!isOpen)}
           aria-label="User menu"
         >
+          {user.email}
           <AccountCircleIcon fontSize="large" className="" />
           <span className="font-medium"></span>
           <KeyboardArrowDown
@@ -57,10 +53,11 @@ export default function Navbar() {
             <ul className="flex flex-col">
               <li>
                 <button
-                  onClick={handleLogout}
-                  className="w-full cursor-pointer rounded-lg px-4 py-3 text-left font-semibold uppercase transition hover:bg-blue-100"
+                  className="w-full cursor-pointer rounded-lg px-4 py-3 text-center font-semibold uppercase transition hover:bg-blue-100"
+                  onClick={logout}
+                  disabled={isPending}
                 >
-                  Logout
+                  {isPending ? <SpinnerMini /> : "Logout"}
                 </button>
               </li>
             </ul>
