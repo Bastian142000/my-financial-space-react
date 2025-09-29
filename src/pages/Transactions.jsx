@@ -3,27 +3,52 @@ import TransactionList from "../features/transactions/components/TransactionList
 import AddTransactionModal from "../features/transactions/components/AddTransactionModal";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CustomModal from "../ui/CustomModal";
+import useDeleteTransactions from "../features/transactions/hooks/useDeleteTransactions";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTransactions } from "../services/transactions";
 
 export default function Transactions() {
-  const [selectedItems, setSelectedItems] = useState([]);
+  const {
+    data: transactions,
+    isPending,
+    error,
+  } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: fetchTransactions,
+  });
 
-  function handleCheckboxChange(e) {
-    const id = Number(e.target.value);
-    const checked = e.target.checked;
+  const [selectedIds, setSelectedIds] = useState([]);
 
-    setSelectedItems((prev) => {
-      if (checked) {
-        return [...prev, id];
+  const handleSelect = (itemId) => {
+    setSelectedIds((prevSelected) => {
+      if (prevSelected.includes(itemId)) {
+        return prevSelected.filter((id) => id !== itemId);
       } else {
-        return prev.filter((item) => item !== id);
+        return [...prevSelected, itemId];
       }
     });
-  }
+  };
 
-  async function handleDeleteMany() {}
+  const handleSelectAll = () => {
+    if (selectedIds.length === transactions.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(transactions.map((t) => t.id));
+    }
+  };
 
-  function handleSelectAll(e) {}
+  const { deleteTransactions } = useDeleteTransactions();
+
+  const handleDelete = () => {
+    deleteTransactions({ ids: selectedIds });
+    setSelectedIds([]);
+  };
+
+  const isAllSelected = selectedIds.length === transactions?.length;
+
+  const isIndeterminate =
+    selectedIds.length > 0 && selectedIds.length < transactions.length;
 
   return (
     <div className="mx-auto mt-5 flex h-11/12 w-8/12 max-w-screen flex-col overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:h-11/12 lg:w-10/12 lg:overflow-x-hidden">
@@ -36,27 +61,35 @@ export default function Transactions() {
       </div>
 
       {/* Modal with form */}
-      <div className="mx-auto flex w-fit justify-end lg:w-11/12">
+      <div className="mx-auto flex w-fit items-center justify-end lg:w-11/12">
         <AddTransactionModal />
-        {selectedItems.length > 1 && (
-          <div className="flex h-10 items-center">
-            <CustomModal
-              title={"Delete all selected transactions?"}
-              modalBorderColor={"border-none"}
-              btnBorderColor={"border-none"}
-              btnText={<DeleteForeverIcon fontSize="large" />}
-              btnWidth={"w-fit"}
-              btnTextColor={"text-red-500"}
-              btnHoverTextColor={"hover:text-red-500"}
-              onClick={handleDeleteMany}
-            ></CustomModal>
-          </div>
+
+        {selectedIds?.length > 1 && (
+          <CustomModal
+            title={"Delete all selected transations?"}
+            modalBorderColor={"border-none"}
+            btnText={<DeleteForeverIcon fontSize="large" />}
+            btnBorderColor={"border-none"}
+            btnHoverTextColor={"hover:text-red-500"}
+            btnTextColor={"text-black"}
+            onClick={handleDelete}
+          ></CustomModal>
         )}
       </div>
 
       {/* Table UI */}
-      <TransactionTable onSelectAll={handleSelectAll}>
-        <TransactionList />
+      <TransactionTable
+        handleSelectAll={handleSelectAll}
+        isAllSelected={isAllSelected}
+        isIndeterminate={isIndeterminate}
+      >
+        <TransactionList
+          transactions={transactions}
+          isPending={isPending}
+          error={error}
+          selectedIds={selectedIds}
+          onSelect={handleSelect}
+        />
       </TransactionTable>
     </div>
   );

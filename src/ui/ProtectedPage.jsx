@@ -9,13 +9,13 @@ export default function ProtectedPage() {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const routeLoading = navigation.state === "loading";
-  const { isLoading, isAuthenticated } = useUser();
+  const { isPending, isAuthenticated } = useUser();
 
   useEffect(() => {
-    if (!isAuthenticated && !isLoading) navigate("/");
-  }, [isAuthenticated, isLoading, navigate]);
+    if (!isAuthenticated && !isPending) navigate("/");
+  }, [isAuthenticated, isPending, navigate]);
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="absolute top-6/12 right-6/12">
         <CircularProgress color="secondary" />
