@@ -9,6 +9,7 @@ export default function useDeleteTransactions() {
       queryClient.invalidateQueries({ queryKey: ["transactions"] }),
     onError: (error) => {
       console.error(error.message);
+      throw new Error(error.message);
     },
   });
   return { deleteTransactions };

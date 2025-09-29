@@ -1,16 +1,36 @@
 import useCategories from "../../../hooks/useCategories";
 import CustomModal from "../../../ui/CustomModal";
 import TransactionForm from "../components/TransactionForm";
+import useAddTransaction from "../hooks/useAddTransaction";
+import useUser from "../../auth/hooks/useUser";
 import { useState } from "react";
 
 export default function AddTransactionModal() {
-  const [description, setDescription] = useState("");
-  const [type, setType] = useState("INCOME");
   const [amount, setAmount] = useState(0);
+  const [type, setType] = useState("INCOME");
+  const [description, setDescription] = useState("");
+  const [categoryId, setCategoryId] = useState(1);
 
   const { categories, isPending, error } = useCategories();
 
-  async function handleSubmit() {}
+  const { addTransaction, isPending: isAdding } = useAddTransaction();
+
+  const { user } = useUser();
+
+  const handleSubmit = () => {
+    addTransaction({
+      amount,
+      type,
+      description,
+      category_id: categoryId,
+      user_id: user.id,
+    });
+    setAmount(0);
+    setType("INCOME");
+    setDescription("");
+    setCategoryId(1);
+  };
+
   return (
     <CustomModal
       title={"Register a new transaction"}
@@ -21,6 +41,7 @@ export default function AddTransactionModal() {
       btnTextColor={"text-green-600"}
       btnHoverBgColor={"hover:bg-green-400"}
       btnHoverTextColor={"hover:text-white"}
+      isPending={isAdding}
       onClick={handleSubmit}
     >
       <TransactionForm
@@ -31,6 +52,8 @@ export default function AddTransactionModal() {
         setType={setType}
         setAmount={setAmount}
         categories={categories}
+        category={categoryId}
+        setCategory={setCategoryId}
         isPending={isPending}
         error={error}
       />

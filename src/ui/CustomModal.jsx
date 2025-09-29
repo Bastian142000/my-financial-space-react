@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import SpinnerMini from "./SpinnerMini";
 
 const style = {
   position: "absolute",
@@ -25,7 +26,7 @@ export default function CustomModal({
   title,
   btnText,
   onClick,
-  status,
+  isPending,
   modalBorderColor,
   btnWidth,
   btnBorderColor,
@@ -94,7 +95,7 @@ export default function CustomModal({
                 textColor={"text-green-500"}
                 hoverBgColor={"hover:bg-green-600"}
                 hoverTextColor={"hover:text-white"}
-                disabled={status === "loading"}
+                disabled={isPending}
                 onClick={async () => {
                   try {
                     await onClick();
@@ -104,7 +105,7 @@ export default function CustomModal({
                   }
                 }}
               >
-                {status === "loading" ? "Loading..." : "Confirm"}
+                {isPending ? <SpinnerMini /> : "Confirm"}
               </Button>
             </div>
           </div>
