@@ -1,11 +1,14 @@
+import SpinnerMini from "../../../ui/SpinnerMini";
 import { validateNumber } from "../../../utils/validateInputNumber";
 
 export default function TransactionForm({
+  categories,
+  isPending,
+  error,
   description,
   category,
   type,
   amount,
-  categories,
   setDescription,
   setCategory,
   setType,
@@ -47,6 +50,8 @@ export default function TransactionForm({
               value={category}
               onChange={handleCategoryChange}
             >
+              {isPending && <SpinnerMini />}
+              {error && <span className="text-red-500">{error}</span>}
               {categories &&
                 categories.map((c) => (
                   <option key={c.id} value={c.id}>

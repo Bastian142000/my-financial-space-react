@@ -2,8 +2,8 @@ import { TableCell } from "@mui/material";
 
 export default function SelectTransaction({
   transaction,
-  selectedItems,
-  onCheckboxChange,
+  selectedIds,
+  onSelect,
 }) {
   return (
     <TableCell
@@ -17,9 +17,8 @@ export default function SelectTransaction({
     >
       <input
         type="checkbox"
-        //checked={selectedItems.includes(Number(transaction.id))}
-        //value={transaction.id}
-        onChange={onCheckboxChange}
+        checked={selectedIds.includes(transaction.id)}
+        onChange={() => onSelect(transaction.id)}
         className="h-4 w-4 cursor-pointer text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
       />
     </TableCell>

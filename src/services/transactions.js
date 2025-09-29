@@ -14,3 +14,17 @@ export async function fetchTransactions() {
 
   return data;
 }
+
+export async function deleteTransactions({ ids }) {
+  const { data, error } = await supabase
+    .from("Transaction")
+    .delete()
+    .in("id", ids);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Transactions could not be deleted");
+  }
+
+  return data;
+}

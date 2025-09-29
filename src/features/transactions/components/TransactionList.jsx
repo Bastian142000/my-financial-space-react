@@ -1,20 +1,15 @@
 import Transaction from "./Transaction";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import { TableCell, TableRow } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTransactions } from "../../../services/transactions";
 
-export default function TransactionList({ selectedItems, onCheckboxChange }) {
-  const {
-    data: transactions,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactions,
-  });
-
-  if (isLoading)
+export default function TransactionList({
+  transactions,
+  error,
+  isPending,
+  selectedIds,
+  onSelect,
+}) {
+  if (isPending)
     return (
       <TableRow>
         <TableCell colSpan={7} align="center">
@@ -45,8 +40,8 @@ export default function TransactionList({ selectedItems, onCheckboxChange }) {
         <TableRow key={transaction.id}>
           <Transaction
             transaction={transaction}
-            selectedItems={selectedItems}
-            onCheckboxChange={onCheckboxChange}
+            selectedIds={selectedIds}
+            onSelect={onSelect}
           />
         </TableRow>
       ))}

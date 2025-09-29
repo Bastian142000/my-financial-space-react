@@ -3,21 +3,18 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import CustomModal from "../../../ui/CustomModal";
 import SelectTransaction from "./SelectTransaction";
 import { TableCell } from "@mui/material";
+import useDeleteTransactions from "../hooks/useDeleteTransactions";
 
-export default function Transaction({
-  transaction,
-  selectedItems,
-  onCheckboxChange,
-}) {
-  async function handleDelete() {}
-
-  function handleUpdate() {}
-
+export default function Transaction({ selectedIds, onSelect, transaction }) {
+  const date = new Date(transaction.date);
+  const { deleteTransactions } = useDeleteTransactions();
   return (
     <>
+      <TableCell></TableCell>
       <SelectTransaction
-        selectedItems={selectedItems}
-        onCheckboxChange={onCheckboxChange}
+        transaction={transaction}
+        selectedIds={selectedIds}
+        onSelect={onSelect}
       />
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
         {transaction.Category?.category_name}
@@ -32,7 +29,7 @@ export default function Transaction({
         {transaction.amount}
       </TableCell>
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
-        {transaction.date}
+        {date.toLocaleDateString()}
       </TableCell>
       <TableCell>
         <div className="flex justify-center gap-5">
@@ -45,7 +42,7 @@ export default function Transaction({
             btnHoverBgColor={"hover:bg-red-500"}
             btnHoverTextColor={"hover:text-white"}
             btnText={<DeleteIcon />}
-            onClick={handleDelete}
+            onClick={() => deleteTransactions({ ids: [transaction.id] })}
           ></CustomModal>
 
           <CustomModal
@@ -57,7 +54,6 @@ export default function Transaction({
             btnHoverBgColor={"hover:bg-yellow-500"}
             btnHoverTextColor={"hover:text-white"}
             btnText={<EditNoteIcon />}
-            onClick={handleUpdate}
           ></CustomModal>
         </div>
       </TableCell>

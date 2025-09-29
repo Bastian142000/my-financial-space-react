@@ -22,8 +22,8 @@ const style = {
 };
 
 export default function CustomModal({
-  btnText,
   title,
+  btnText,
   onClick,
   status,
   modalBorderColor,

@@ -1,3 +1,4 @@
+import useCategories from "../../../hooks/useCategories";
 import CustomModal from "../../../ui/CustomModal";
 import TransactionForm from "../components/TransactionForm";
 import { useState } from "react";
@@ -6,6 +7,8 @@ export default function AddTransactionModal() {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("INCOME");
   const [amount, setAmount] = useState(0);
+
+  const { categories, isPending, error } = useCategories();
 
   async function handleSubmit() {}
   return (
@@ -27,6 +30,9 @@ export default function AddTransactionModal() {
         setDescription={setDescription}
         setType={setType}
         setAmount={setAmount}
+        categories={categories}
+        isPending={isPending}
+        error={error}
       />
     </CustomModal>
   );
