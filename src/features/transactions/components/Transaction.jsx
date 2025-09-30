@@ -2,12 +2,39 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import CustomModal from "../../../ui/CustomModal";
 import SelectTransaction from "./SelectTransaction";
-import { TableCell } from "@mui/material";
 import useDeleteTransactions from "../hooks/useDeleteTransactions";
+import TransactionForm from "./TransactionForm";
+import useTransactionForm from "../hooks/useTransactionForm";
+import useCategories from "../../../hooks/useCategories";
+import useUpdateTransaction from "../hooks/useUpdateTransaction";
+import { TableCell } from "@mui/material";
 
 export default function Transaction({ selectedIds, onSelect, transaction }) {
+  const form = useTransactionForm({
+    description: transaction.description,
+    type: transaction.type,
+    amount: transaction.amount,
+    categoryId: transaction.category_id,
+  });
+
   const date = new Date(transaction.date);
+
   const { deleteTransactions } = useDeleteTransactions();
+
+  const { updateTransaction } = useUpdateTransaction();
+
+  const { categories, isPending, error } = useCategories();
+
+  const handleEdit = () => {
+    updateTransaction({
+      id: transaction.id,
+      amount: form.amount,
+      type: form.type,
+      description: form.description,
+      category_id: form.categoryId,
+    });
+  };
+
   return (
     <>
       <TableCell></TableCell>
@@ -54,7 +81,15 @@ export default function Transaction({ selectedIds, onSelect, transaction }) {
             btnHoverBgColor={"hover:bg-yellow-500"}
             btnHoverTextColor={"hover:text-white"}
             btnText={<EditNoteIcon />}
-          ></CustomModal>
+            onClick={() => handleEdit(transaction)}
+          >
+            <TransactionForm
+              {...form}
+              categories={categories}
+              isPending={isPending}
+              error={error}
+            />
+          </CustomModal>
         </div>
       </TableCell>
     </>

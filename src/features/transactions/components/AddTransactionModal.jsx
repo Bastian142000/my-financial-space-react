@@ -3,13 +3,10 @@ import CustomModal from "../../../ui/CustomModal";
 import TransactionForm from "../components/TransactionForm";
 import useAddTransaction from "../hooks/useAddTransaction";
 import useUser from "../../auth/hooks/useUser";
-import { useState } from "react";
+import useTransactionForm from "../hooks/useTransactionForm";
 
 export default function AddTransactionModal() {
-  const [amount, setAmount] = useState(0);
-  const [type, setType] = useState("INCOME");
-  const [description, setDescription] = useState("");
-  const [categoryId, setCategoryId] = useState(1);
+  const form = useTransactionForm();
 
   const { categories, isPending, error } = useCategories();
 
@@ -19,16 +16,13 @@ export default function AddTransactionModal() {
 
   const handleSubmit = () => {
     addTransaction({
-      amount,
-      type,
-      description,
-      category_id: categoryId,
+      amount: form.amount,
+      type: form.type,
+      description: form.description,
+      category_id: form.categoryId,
       user_id: user.id,
     });
-    setAmount(0);
-    setType("INCOME");
-    setDescription("");
-    setCategoryId(1);
+    form.reset();
   };
 
   return (
@@ -45,15 +39,8 @@ export default function AddTransactionModal() {
       onClick={handleSubmit}
     >
       <TransactionForm
-        description={description}
-        type={type}
-        amount={amount}
-        setDescription={setDescription}
-        setType={setType}
-        setAmount={setAmount}
+        {...form}
         categories={categories}
-        category={categoryId}
-        setCategory={setCategoryId}
         isPending={isPending}
         error={error}
       />

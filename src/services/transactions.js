@@ -56,3 +56,24 @@ export async function deleteTransactions({ ids }) {
 
   return data;
 }
+
+export async function updateTransaction({
+  id,
+  amount,
+  type,
+  description,
+  category_id,
+}) {
+  const { data, error } = await supabase
+    .from("Transaction")
+    .update({ amount, type, description, category_id })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Transaction could not be updated");
+  }
+
+  return data;
+}
