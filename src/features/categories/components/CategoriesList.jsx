@@ -1,5 +1,5 @@
-import useCategories from "../../hooks/useCategories";
-import SpinnerMini from "../../ui/SpinnerMini";
+import useCategories from "../../../hooks/useCategories";
+import SpinnerMini from "../../../ui/SpinnerMini";
 import Category from "./Category";
 
 export default function CategoriesList() {

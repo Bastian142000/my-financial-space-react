@@ -1,7 +1,17 @@
 import Button from "../ui/Button";
-import CategoryList from "../features/categories/CategoriesList";
+import CategoryList from "../features/categories/components/CategoriesList";
+import useCategoryForm from "../features/categories/hooks/useCategoryForm";
+import useAddCategory from "../features/categories/hooks/useAddCategory";
 
 export default function Categories() {
+  const form = useCategoryForm();
+
+  const { addCategory, isPending } = useAddCategory();
+
+  const handleAddCategory = () => {
+    addCategory({ category: form.category });
+    form.reset();
+  };
   return (
     <div className="mx-auto mt-5 flex h-11/12 w-11/12 max-w-screen flex-col items-center overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:h-11/12 lg:w-11/12 lg:overflow-x-hidden">
       {/* Title and Subtitle */}
@@ -18,6 +28,9 @@ export default function Categories() {
           <input
             type="text"
             placeholder="Category name..."
+            value={form.category}
+            onChange={(e) => form.setCategory(e.target.value)}
+            maxLength={15}
             className="h-6/12 w-6/12 rounded-xl border border-gray-400 p-3"
           />
           <Button
@@ -27,6 +40,8 @@ export default function Categories() {
             textColor={"text-green-600"}
             hoverBgColor={"hover:bg-green-400"}
             hoverTextColor={"hover:text-white"}
+            disabled={isPending}
+            onClick={handleAddCategory}
           >
             Add
           </Button>
