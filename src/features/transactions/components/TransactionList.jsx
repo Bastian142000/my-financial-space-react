@@ -13,7 +13,7 @@ export default function TransactionList({
     return (
       <TableRow>
         <TableCell colSpan={7} align="center">
-          <SpinnerMini />;
+          <SpinnerMini />
         </TableCell>
       </TableRow>
     );
@@ -31,7 +31,11 @@ export default function TransactionList({
     <>
       {transactions.length < 1 && (
         <TableRow>
-          <TableCell colSpan={7} align="center">
+          <TableCell
+            colSpan={7}
+            align="center"
+            sx={{ fontWeight: 600, fontSize: "18px" }}
+          >
             Try adding a new transaction!
           </TableCell>
         </TableRow>

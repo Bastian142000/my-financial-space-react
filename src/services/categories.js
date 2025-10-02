@@ -11,10 +11,10 @@ export async function fetchCategories() {
   return data;
 }
 
-export async function addCategory({ category }) {
+export async function addCategory({ category, user_id }) {
   const { data, error } = await supabase
     .from("Category")
-    .insert([{ category_name: category }])
+    .insert([{ category_name: category, user_id }])
     .select();
 
   if (error) {

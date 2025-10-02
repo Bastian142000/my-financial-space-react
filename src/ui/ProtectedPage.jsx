@@ -18,7 +18,7 @@ export default function ProtectedPage() {
   if (isPending)
     return (
       <div className="absolute top-6/12 right-6/12">
-        <CircularProgress color="secondary" />
+        <CircularProgress color="primary" />
       </div>
     );
 
