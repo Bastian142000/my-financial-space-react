@@ -4,19 +4,11 @@ import AddTransactionModal from "../features/transactions/components/AddTransact
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CustomModal from "../ui/CustomModal";
 import useDeleteTransactions from "../features/transactions/hooks/useDeleteTransactions";
+import useTransactions from "../features/transactions/hooks/useTransactions";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTransactions } from "../services/transactions";
 
 export default function Transactions() {
-  const {
-    data: transactions,
-    isPending,
-    error,
-  } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactions,
-  });
+  const { transactions, isPending, error } = useTransactions();
 
   const [selectedIds, setSelectedIds] = useState([]);
 
