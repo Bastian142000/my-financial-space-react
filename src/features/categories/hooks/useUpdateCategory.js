@@ -1,0 +1,16 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateCategory as updateCategoryApi } from "../../../services/categories";
+
+export default function useUpdateCategory() {
+  const queryClient = useQueryClient();
+  const { mutate: updateCategory, isPending } = useMutation({
+    mutationFn: updateCategoryApi,
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["categories"] }),
+    onError: (e) => {
+      console.error(e);
+      throw new Error(e.message);
+    },
+  });
+  return { updateCategory, isPending };
+}

@@ -6,18 +6,18 @@ export default function TransactionForm({
   isPending,
   error,
   description,
-  category,
+  categoryId,
   type,
   amount,
   setDescription,
-  setCategory,
+  setCategoryId,
   setType,
   setAmount,
   onSubmit,
   children,
 }) {
   const handleDescriptionChange = (e) => setDescription(e.target.value);
-  const handleCategoryChange = (e) => setCategory(Number(e.target.value));
+  const handleCategoryChange = (e) => setCategoryId(Number(e.target.value));
   const handleTypeChange = (e) => setType(e.target.value);
   const handleAmountChange = (e) => {
     validateNumber(e, setAmount);
@@ -47,7 +47,7 @@ export default function TransactionForm({
             <select
               id="category"
               className="w-32 rounded-xl border border-gray-200 p-2"
-              value={category}
+              value={categoryId}
               onChange={handleCategoryChange}
             >
               {isPending && <SpinnerMini />}
