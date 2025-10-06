@@ -8,7 +8,9 @@ export default function Income({ income }) {
       </div>
       <div className="text-xl font-semibold">
         <h2>MONTHLY INCOME</h2>
-        <p className="text-3xl font-bold text-green-600">${income}</p>
+        <p className="text-3xl font-bold text-green-600">
+          ${income.toLocaleString()}
+        </p>
       </div>
     </div>
   );

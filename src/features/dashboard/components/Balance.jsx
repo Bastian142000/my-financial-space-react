@@ -11,7 +11,7 @@ export default function Balance({ balance }) {
         <p
           className={`flex text-3xl font-semibold ${balance > 0 ? "text-green-700" : balance < 0 ? "text-orange-400" : "text-black"} `}
         >
-          ${balance}
+          ${balance.toLocaleString()}
         </p>
       </div>
     </div>

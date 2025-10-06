@@ -28,7 +28,7 @@ export default function TransactionTable({
             <TableCell sx={{ fontSize: "16px" }}>Category</TableCell>
             <TableCell sx={{ fontSize: "16px" }}>Description</TableCell>
             <TableCell sx={{ fontSize: "16px" }}>Type</TableCell>
-            <TableCell sx={{ fontSize: "16px" }}>Amount ($)</TableCell>
+            <TableCell sx={{ fontSize: "16px" }}>Amount</TableCell>
             <TableCell sx={{ fontSize: "16px" }}>Date</TableCell>
             <TableCell sx={{ fontSize: "16px" }}>Actions</TableCell>
           </TableRow>
