@@ -2,8 +2,15 @@ import dayjs from "dayjs";
 
 export default function groupByMonth(transactions) {
   const result = {};
+  const now = dayjs();
+  const data =
+    transactions?.filter((t) => {
+      if (t.type !== "INCOME") return false;
+      const date = dayjs(t.date);
+      return date.month() === now.month() && date.year() === now.year();
+    }) ?? [];
 
-  transactions?.forEach((t) => {
+  data?.forEach((t) => {
     const month = dayjs(t.date).format("YYYY-MM");
 
     if (!result[month]) {

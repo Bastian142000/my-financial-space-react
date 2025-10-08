@@ -82,14 +82,13 @@ export default function TransactionForm({
         </label>
         <input
           id="amount"
-          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
           type="text"
-          pattern="(?:0|[1-9]\d*)"
-          inputMode="decimal"
+          pattern="^\$?((\d{1,3}(,\d{3})*)|(\d+))(\.\d{2})?$"
           autoComplete="off"
           placeholder="Amount"
           value={amount}
           onChange={handleAmountChange}
+          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
         ></input>
       </div>
 

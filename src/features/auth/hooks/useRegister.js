@@ -1,16 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
-import { login as loginApi } from "../../../services/auth";
+import { register as registerApi } from "../../../services/auth";
 import { useNavigate } from "react-router";
 
-export default function useLogin() {
+export default function useRegister() {
   const navigate = useNavigate();
 
   const {
-    mutate: login,
+    mutate: register,
     isPending,
     error,
   } = useMutation({
-    mutationFn: ({ email, password }) => loginApi({ email, password }),
+    mutationFn: ({ email, password }) => registerApi({ email, password }),
     onSuccess: () => {
       navigate("/app/dashboard");
     },
@@ -19,5 +19,5 @@ export default function useLogin() {
     },
   });
 
-  return { login, isPending, error };
+  return { register, isPending, error };
 }

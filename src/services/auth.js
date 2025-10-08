@@ -36,3 +36,17 @@ export async function logout() {
     throw new Error(error.message);
   }
 }
+
+export async function register({ email, password }) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error(error);
+    throw new Error("User could not be registered");
+  }
+
+  return data;
+}
