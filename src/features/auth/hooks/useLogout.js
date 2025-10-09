@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout as logoutApi } from "../../../services/auth";
 import { useNavigate } from "react-router";
@@ -12,8 +13,9 @@ export default function useLogout() {
       navigate("/");
       queryClient.removeQueries();
     },
-    onError: (error) => {
-      console.error(error.message);
+    onError: (e) => {
+      console.error(e.message);
+      toast.error(e.message);
     },
   });
 

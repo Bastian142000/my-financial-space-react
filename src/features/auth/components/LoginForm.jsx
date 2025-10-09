@@ -12,7 +12,7 @@ export default function LoginForm() {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const { login, isPending, error } = useLogin();
+  const { login, isPending } = useLogin();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,8 +30,6 @@ export default function LoginForm() {
       onPasswordChange={handlePasswordChange}
       onSubmit={handleSubmit}
     >
-      {error && <span className="text-red-500">{error.message}</span>}
-
       <div className="flex py-4 text-blue-400">
         <NavLink to="/register">Haven't registered yet?</NavLink>
       </div>
