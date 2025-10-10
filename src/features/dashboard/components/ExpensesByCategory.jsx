@@ -37,12 +37,12 @@ export default function ExpensesByCategory({ transactions = [] }) {
   const data = Object.values(grouped);
 
   return (
-    <div className="h-[462px] rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm">
+    <>
       <h2 className="mb-4 text-xl font-bold">Expenses by category</h2>
       {data.length === 0 ? (
         <p className="text-gray-500">No expenses for this month.</p>
       ) : (
-        <ResponsiveContainer width="100%" height="80%">
+        <ResponsiveContainer width="100%" height="90%">
           <PieChart>
             <Legend />
             <Tooltip
@@ -68,6 +68,6 @@ export default function ExpensesByCategory({ transactions = [] }) {
           </PieChart>
         </ResponsiveContainer>
       )}
-    </div>
+    </>
   );
 }

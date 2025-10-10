@@ -2,7 +2,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export default function Expense({ expense }) {
   return (
-    <div className="mt-5 flex h-52 w-lg items-center gap-5 rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm">
+    <div className="mt-5 flex h-52 w-full items-center gap-5 rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm lg:w-lg">
       <div className="rounded-full border border-red-300 bg-red-50 p-5">
         <AttachMoneyIcon fontSize="large" className="text-red-700" />
       </div>

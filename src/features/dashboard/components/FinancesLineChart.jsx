@@ -13,12 +13,12 @@ import groupByMonth from "../../../utils/groupByMonth";
 export default function FinancesLineChart({ transactions }) {
   const data = groupByMonth(transactions);
   return (
-    <div className="h-[462px] rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm">
+    <>
       <h2 className="mb-4 text-xl font-bold">Monthly Income vs Expenses</h2>
       {data.length === 0 ? (
         <p className="text-gray-500">No transactions for this month.</p>
       ) : (
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height="90%">
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
@@ -44,6 +44,6 @@ export default function FinancesLineChart({ transactions }) {
           </LineChart>
         </ResponsiveContainer>
       )}
-    </div>
+    </>
   );
 }
