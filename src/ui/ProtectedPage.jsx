@@ -39,7 +39,7 @@ export default function ProtectedPage() {
           <Sidebar />
         </div>
 
-        <main className="main">
+        <main className="main mt-20 max-h-250">
           <Outlet />
         </main>
       </div>

@@ -1,9 +1,9 @@
 import Button from "../../../ui/Button";
 import AuthForm from "./AuthForm";
 import SpinnerMini from "../../../ui/SpinnerMini";
+import useLogin from "../hooks/useLogin";
 import { useState } from "react";
 import { NavLink } from "react-router";
-import { useLogin } from "../hooks/useLogin";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("test@example.cl");

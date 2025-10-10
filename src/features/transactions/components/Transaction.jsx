@@ -53,7 +53,7 @@ export default function Transaction({ selectedIds, onSelect, transaction }) {
         {transaction.type}
       </TableCell>
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
-        {transaction.amount}
+        ${transaction.amount.toLocaleString()}
       </TableCell>
       <TableCell sx={{ "&:hover": { backgroundColor: "#f6f6f6" } }}>
         {date.toLocaleDateString()}

@@ -1,10 +1,7 @@
 export default function AuthForm({
-  mode,
   email,
-  username,
   password,
   onEmailChange,
-  onUsernameChange,
   onPasswordChange,
   onSubmit,
   children,
@@ -19,16 +16,6 @@ export default function AuthForm({
           value={email}
           onChange={onEmailChange}
         ></input>
-
-        {mode === "register" && (
-          <input
-            className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-blue-100"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={onUsernameChange}
-          ></input>
-        )}
 
         <input
           className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-blue-100"

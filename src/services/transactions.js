@@ -1,11 +1,12 @@
 import supabase from "./supabase";
 
-export async function fetchTransactions() {
+export async function fetchTransactions({ user_id }) {
   const { data, error } = await supabase
     .from("Transaction")
     .select(
       `id,description, type, amount, date, category_id, Category (category_name)`,
-    );
+    )
+    .eq("user_id", user_id);
 
   if (error) {
     console.error(error);

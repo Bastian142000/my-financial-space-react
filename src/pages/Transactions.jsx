@@ -4,19 +4,11 @@ import AddTransactionModal from "../features/transactions/components/AddTransact
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CustomModal from "../ui/CustomModal";
 import useDeleteTransactions from "../features/transactions/hooks/useDeleteTransactions";
+import useTransactions from "../features/transactions/hooks/useTransactions";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTransactions } from "../services/transactions";
 
 export default function Transactions() {
-  const {
-    data: transactions,
-    isPending,
-    error,
-  } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactions,
-  });
+  const { transactions, isPending, error } = useTransactions();
 
   const [selectedIds, setSelectedIds] = useState([]);
 
@@ -51,17 +43,17 @@ export default function Transactions() {
     selectedIds.length > 0 && selectedIds.length < transactions.length;
 
   return (
-    <div className="mx-auto mt-5 flex h-11/12 w-8/12 max-w-screen flex-col overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:h-11/12 lg:w-10/12 lg:overflow-x-hidden">
+    <div className="mx-auto mt-5 flex h-11/12 w-12/12 max-w-screen flex-col overflow-x-auto rounded-xl shadow-sm lg:h-12/12 lg:w-10/12 lg:overflow-x-hidden lg:border lg:border-gray-300">
       {/* Title and Subtitle */}
-      <div className="m-7 flex flex-col gap-3 overflow-auto px-7 text-2xl">
-        <h1 className="font-semibold">Add new transactions</h1>
+      <div className="flex h-full w-12/12 flex-col gap-3 overflow-auto p-5 text-2xl lg:m-7 lg:h-20 lg:p-0 lg:px-7">
+        <h1 className="text-md font-semibold">Add new transactions</h1>
         <h2 className="text-base text-gray-600">
           Here you can register a new transaction on the current month
         </h2>
       </div>
 
       {/* Modal with form */}
-      <div className="mx-auto flex w-fit items-center justify-end lg:w-11/12">
+      <div className="mx-auto flex w-fit items-center justify-end pt-5 lg:w-11/12">
         <AddTransactionModal />
 
         {selectedIds?.length > 1 && (
