@@ -26,11 +26,11 @@ export default function Statistics() {
         )}
 
         <div className="flex w-10/12 flex-wrap justify-around gap-18">
-          <div className="h-[500px] w-full rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm lg:w-6/12">
+          <div className="h-[500px] w-full rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm md:w-12/12 lg:w-6/12">
             <FinancesLineChart transactions={transactions} />
           </div>
 
-          <div className="h-[500px] w-full rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm lg:w-5/12">
+          <div className="h-[500px] w-full rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm md:w-12/12 lg:w-5/12">
             <ExpensesByCategory transactions={transactions} />
           </div>
         </div>

@@ -18,9 +18,9 @@ export default function Categories() {
     form.reset();
   };
   return (
-    <div className="mx-auto mt-5 flex h-11/12 w-11/12 max-w-screen flex-col items-center overflow-x-auto rounded-xl border border-gray-300 shadow-sm lg:h-11/12 lg:w-11/12 lg:overflow-x-hidden">
+    <div className="mx-auto mt-5 flex h-120 w-11/12 max-w-screen flex-col overflow-x-auto rounded-xl shadow-sm lg:h-full lg:w-10/12 lg:overflow-x-hidden lg:border lg:border-gray-300">
       {/* Title and Subtitle */}
-      <div className="m-7 flex w-12/12 flex-col gap-3 overflow-auto px-7 text-2xl">
+      <div className="flex w-12/12 flex-col gap-3 overflow-auto text-2xl lg:m-7 lg:px-7">
         <h1 className="font-semibold">Add new categories</h1>
         <h2 className="text-base text-gray-600">
           Here you can register custom categories
@@ -28,8 +28,8 @@ export default function Categories() {
       </div>
 
       {/* Content */}
-      <div className="flex h-10/12 max-h-10/12 w-8/12 flex-col overflow-y-auto rounded-2xl border border-gray-300">
-        <div className="flex h-25 items-center justify-center gap-5 border-b border-gray-300">
+      <div className="mx-auto flex h-10/12 max-h-10/12 w-12/12 flex-col overflow-y-auto rounded-2xl lg:w-8/12 lg:border lg:border-gray-300">
+        <div className="flex h-25 items-center justify-center gap-1 border-b border-gray-300 lg:gap-5">
           <CategoryForm {...form} placeholder={"Category..."} />
           <Button
             height={"h-12"}
