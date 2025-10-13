@@ -25,12 +25,12 @@ export default function Statistics() {
           </div>
         )}
 
-        <div className="flex w-10/12 flex-wrap justify-around gap-18">
-          <div className="h-[500px] w-full rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm md:w-12/12 lg:w-6/12">
+        <div className="flex w-11/12 flex-col items-center gap-8 lg:w-10/12 lg:flex-row lg:justify-around">
+          <div className="h-[400px] w-full rounded-2xl border border-gray-200 bg-white/70 p-4 shadow-lg backdrop-blur-sm sm:h-[450px] sm:p-6 md:h-[500px] md:w-10/12 md:p-8 lg:h-[580px] lg:w-6/12">
             <FinancesLineChart transactions={transactions} />
           </div>
 
-          <div className="h-[500px] w-full rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm md:w-12/12 lg:w-5/12">
+          <div className="h-[400px] w-full rounded-2xl border border-gray-200 bg-white/70 p-4 shadow-lg backdrop-blur-sm sm:h-[450px] sm:p-6 md:h-[500px] md:w-10/12 md:p-8 lg:h-[580px] lg:w-5/12">
             <ExpensesByCategory transactions={transactions} />
           </div>
         </div>

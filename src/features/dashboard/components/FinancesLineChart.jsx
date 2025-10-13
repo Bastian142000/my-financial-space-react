@@ -9,16 +9,32 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import groupByMonth from "../../../utils/groupByMonth";
+import { useState } from "react";
 
 export default function FinancesLineChart({ transactions }) {
-  const data = groupByMonth(transactions);
+  const [prevYear, setPrevYear] = useState(false);
+  const data = groupByMonth(transactions, prevYear);
   return (
     <>
+      <div className="flex justify-end gap-5">
+        <button
+          className={`cursor-pointer rounded-xl border border-gray-300 p-3 shadow-xl transition-transform duration-300 ease-in-out ${prevYear ? "scale-90 bg-blue-100" : ""}`}
+          onClick={() => setPrevYear(true)}
+        >
+          Previous year
+        </button>
+        <button
+          className={`cursor-pointer rounded-xl border border-gray-300 p-3 shadow-xl transition-transform duration-300 ease-in-out ${prevYear ? "" : "scale-90 bg-blue-100"}`}
+          onClick={() => setPrevYear(false)}
+        >
+          Current year
+        </button>
+      </div>
       <h2 className="mb-4 text-xl font-bold">Monthly Income vs Expenses</h2>
       {data.length === 0 ? (
         <p className="text-gray-500">No transactions for this month.</p>
       ) : (
-        <ResponsiveContainer width="100%" height="90%">
+        <ResponsiveContainer width="100%" height="80%">
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />

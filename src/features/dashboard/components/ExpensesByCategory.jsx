@@ -38,7 +38,9 @@ export default function ExpensesByCategory({ transactions = [] }) {
 
   return (
     <>
-      <h2 className="mb-4 text-xl font-bold">Expenses by category</h2>
+      <h2 className="mb-4 text-xl font-bold">
+        Expenses by category (Current month)
+      </h2>
       {data.length === 0 ? (
         <p className="text-gray-500">No expenses for this month.</p>
       ) : (

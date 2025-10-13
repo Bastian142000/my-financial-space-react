@@ -1,17 +1,17 @@
 import dayjs from "dayjs";
 
-export default function groupByMonth(transactions) {
+export default function groupByMonth(transactions, prevYear) {
   const result = {};
   const now = dayjs();
   const data =
     transactions?.filter((t) => {
-      if (t.type !== "INCOME") return false;
       const date = dayjs(t.date);
-      return date.month() === now.month() && date.year() === now.year();
+      if (prevYear) return date.year() === now.year() - 1;
+      return date.year() === now.year();
     }) ?? [];
 
   data?.forEach((t) => {
-    const month = dayjs(t.date).format("YYYY-MM");
+    const month = dayjs(t.date).format("MMM YYYY");
 
     if (!result[month]) {
       result[month] = { month, income: 0, expense: 0 };
@@ -24,5 +24,7 @@ export default function groupByMonth(transactions) {
     }
   });
 
-  return Object.values(result);
+  return Object.values(result).sort((a, b) =>
+    dayjs(a.month).diff(dayjs(b.month)),
+  );
 }
