@@ -1,18 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchTransactions } from "../../../services/transactions";
 import useUser from "../../auth/hooks/useUser";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAllTransactions } from "../../../services/transactions";
+import dayjs from "dayjs";
 
 export default function useStatistics() {
   const { user } = useUser();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () => fetchTransactions({ user_id: user.id }),
+    queryKey: ["AllTransactions"],
+    queryFn: () => fetchAllTransactions({ user_id: user.id }),
     select: (transactions) => {
-      const income = transactions
+      const now = dayjs();
+      const result = transactions?.filter(
+        (t) =>
+          dayjs(t.date).month() === now.month() &&
+          dayjs(t.date).year() === now.year(),
+      );
+
+      const income = result
         .filter((t) => t.type === "INCOME")
         .reduce((acc, curr) => acc + curr.amount, 0);
 
-      const expense = transactions
+      const expense = result
         .filter((t) => t.type === "EXPENSE")
         .reduce((acc, curr) => acc + curr.amount, 0);
 

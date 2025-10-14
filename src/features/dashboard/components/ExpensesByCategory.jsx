@@ -17,7 +17,7 @@ const COLORS = [
   "#a4de6c",
 ];
 
-export default function ExpensesByCategory({ transactions = [] }) {
+export default function ExpensesByCategory({ transactions }) {
   const now = dayjs();
 
   const expenses =

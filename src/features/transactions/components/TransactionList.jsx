@@ -29,7 +29,7 @@ export default function TransactionList({
 
   return (
     <>
-      {transactions.length < 1 && (
+      {transactions?.length < 1 && (
         <TableRow>
           <TableCell
             colSpan={7}
@@ -40,7 +40,7 @@ export default function TransactionList({
           </TableCell>
         </TableRow>
       )}
-      {transactions.map((transaction) => (
+      {transactions?.map((transaction) => (
         <TableRow key={transaction.id}>
           <Transaction
             transaction={transaction}

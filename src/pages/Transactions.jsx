@@ -5,11 +5,22 @@ import useTransactions from "../features/transactions/hooks/useTransactions";
 import useSelectTransactions from "../features/transactions/hooks/useSelectTransactions";
 import TransactionsHeader from "../features/transactions/components/TransactionsHeader";
 import TransactionsToolbar from "../features/transactions/components/TransactionsToolbar";
-import { useCallback } from "react";
+import ReactPaginate from "react-paginate";
+import { useCallback, useState } from "react";
+
+const postsPerPage = 10;
 
 export default function Transactions() {
-  const { transactions, isPending, error } = useTransactions();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { transactions, count, isPending, error } =
+    useTransactions(currentPage);
   const { deleteTransactions } = useDeleteTransactions();
+
+  const pageCount = Math.ceil(count / postsPerPage);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected + 1);
+  };
 
   const {
     selectedIds,
@@ -47,6 +58,34 @@ export default function Transactions() {
           onSelect={handleSelect}
         />
       </TransactionTable>
+
+      {transactions?.length > 0 && (
+        <ReactPaginate
+          previousLabel={"← Previous"}
+          nextLabel={"Next →"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={3}
+          pageRangeDisplayed={2}
+          onPageChange={handlePageClick}
+          containerClassName={"flex items-center justify-center gap-2 my-8"}
+          pageLinkClassName={
+            "px-4 py-2 border border-gray-300 rounded-md hover:bg-blue-300 transition-colors cursor-pointer"
+          }
+          activeLinkClassName={
+            "px-4 py-2 bg-blue-600 text-white border border-blue-600 rounded-md"
+          }
+          previousLinkClassName={
+            "px-4 py-2 border border-gray-300 rounded-md hover:bg-blue-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          }
+          nextLinkClassName={
+            "px-4 py-2 border border-gray-300 rounded-md hover:bg-blue-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          }
+          disabledClassName={"opacity-50 cursor-not-allowed"}
+          disabledLinkClassName={"opacity-50 cursor-not-allowed"}
+          breakLinkClassName={"px-4 py-2"}
+        />
+      )}
     </div>
   );
 }

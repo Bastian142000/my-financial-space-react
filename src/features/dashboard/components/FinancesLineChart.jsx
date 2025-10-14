@@ -30,9 +30,9 @@ export default function FinancesLineChart({ transactions }) {
           Current year
         </button>
       </div>
-      <h2 className="mb-4 text-xl font-bold">Monthly Income vs Expenses</h2>
+      <h2 className="mb-4 text-xl font-bold">Annual Income vs Expenses</h2>
       {data.length === 0 ? (
-        <p className="text-gray-500">No transactions for this month.</p>
+        <p className="text-gray-500">No transactions for this year.</p>
       ) : (
         <ResponsiveContainer width="100%" height="80%">
           <LineChart data={data}>
