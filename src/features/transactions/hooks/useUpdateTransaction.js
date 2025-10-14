@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateTransaction as updateTransactionApi } from "../../../services/transactions";
 
@@ -9,9 +10,9 @@ export default function useUpdateTransaction() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
-    onError: (error) => {
-      console.error(error);
-      throw new Error(error.message);
+    onError: (e) => {
+      console.error(e);
+      toast.error(e.message);
     },
   });
   return { updateTransaction, isPending };

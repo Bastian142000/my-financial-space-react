@@ -5,13 +5,22 @@ import useStatistics from "../hooks/useStatistics";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import FinancesLineChart from "./FinancesLineChart";
 import ExpensesByCategory from "./ExpensesByCategory";
-import useTransactions from "../../transactions/hooks/useTransactions";
+import useAllTransactions from "../hooks/useAllTransactions";
+import toast from "react-hot-toast";
 
 export default function Statistics() {
   const { data, isPending, error } = useStatistics();
   const balance = data?.income - data?.expense;
 
-  const { transactions } = useTransactions();
+  const {
+    transactions,
+    isPending: isLoading,
+    error: isError,
+  } = useAllTransactions();
+
+  if (isLoading) return <SpinnerMini />;
+  if (isError) toast.error(isError);
+
   return (
     <div>
       <div className="flex h-60 flex-wrap items-center justify-center gap-5">

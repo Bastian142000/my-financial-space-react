@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCategory as updateCategoryApi } from "../../../services/categories";
 
@@ -9,7 +10,7 @@ export default function useUpdateCategory() {
       queryClient.invalidateQueries({ queryKey: ["categories"] }),
     onError: (e) => {
       console.error(e);
-      throw new Error(e.message);
+      toast.error(e.message);
     },
   });
   return { updateCategory, isPending };

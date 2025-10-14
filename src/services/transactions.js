@@ -1,12 +1,36 @@
 import supabase from "./supabase";
 
-export async function fetchTransactions({ user_id }) {
+export async function fetchTransactions({ user_id, page }) {
+  const itemsPerPage = 10;
+  const from = (page - 1) * itemsPerPage;
+  const to = from + itemsPerPage - 1;
+
+  const { data, count, error } = await supabase
+    .from("Transaction")
+    .select(
+      `id, description, type, amount, date, category_id, Category (category_name)`,
+      { count: "exact" },
+    )
+    .eq("user_id", user_id)
+    .range(from, to)
+    .order("date", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    throw new Error("Transactions could not be loaded");
+  }
+
+  return { data, count };
+}
+
+export async function fetchAllTransactions({ user_id }) {
   const { data, error } = await supabase
     .from("Transaction")
     .select(
-      `id,description, type, amount, date, category_id, Category (category_name)`,
+      `id, description, type, amount, date, category_id, Category (category_name)`,
     )
-    .eq("user_id", user_id);
+    .eq("user_id", user_id)
+    .order("date", { ascending: false });
 
   if (error) {
     console.error(error);
