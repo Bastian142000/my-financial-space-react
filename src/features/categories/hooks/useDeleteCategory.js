@@ -6,8 +6,10 @@ export default function useDeleteCategory() {
   const queryClient = useQueryClient();
   const { mutate: deleteCategory, isPending } = useMutation({
     mutationFn: deleteCategoryApi,
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["categories"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      toast.success("Category deleted successfully");
+    },
     onError: (e) => {
       console.error(e);
       toast.error(e.message);

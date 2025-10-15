@@ -30,6 +30,7 @@ export default function AddTransactionModal() {
       title={"Register a new transaction"}
       modalBorderColor={"border-gray-300"}
       btnText={"Add transaction"}
+      btnType={"submit"}
       btnWidth={"w-fit"}
       btnBorderColor={"border-green-400"}
       btnTextColor={"text-green-600"}

@@ -30,13 +30,14 @@ export default function TransactionForm({
           Description
         </label>
         <input
+          name="description"
           id="description"
-          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
           type="text"
           placeholder="Description"
           value={description}
           onChange={handleDescriptionChange}
           maxLength={50}
+          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
         ></input>
 
         {/* Form group */}
@@ -45,10 +46,11 @@ export default function TransactionForm({
           <div className="flex flex-col gap-5">
             <label htmlFor="category">Category</label>
             <select
+              name="category"
               id="category"
-              className="w-32 rounded-xl border border-gray-200 p-2"
               value={categoryId}
               onChange={handleCategoryChange}
+              className="w-32 rounded-xl border border-gray-200 p-2"
             >
               {isPending && <SpinnerMini />}
               {error && <span className="text-red-500">{error}</span>}
@@ -65,10 +67,11 @@ export default function TransactionForm({
           <div className="flex flex-col gap-5">
             <label htmlFor="type">Type</label>
             <select
+              name="type"
               id="type"
-              className="w-32 rounded-xl border border-gray-200 p-2"
               value={type}
               onChange={handleTypeChange}
+              className="w-32 rounded-xl border border-gray-200 p-2"
             >
               <option value={"INCOME"}>INCOME</option>
               <option value={"EXPENSE"}>EXPENSE</option>
@@ -81,6 +84,7 @@ export default function TransactionForm({
           Amount
         </label>
         <input
+          name="amount"
           id="amount"
           type="text"
           pattern="^\$?((\d{1,3}(,\d{3})*)|(\d+))(\.\d{2})?$"

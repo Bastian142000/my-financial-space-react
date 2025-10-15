@@ -37,6 +37,7 @@ export default function RegisterForm() {
       </div>
 
       <Button
+        type={"submit"}
         width={"w-45"}
         borderColor={"border-blue-300"}
         textColor={"text-blue-600"}

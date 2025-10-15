@@ -25,6 +25,7 @@ const style = {
 export default function CustomModal({
   title,
   btnText,
+  btnType,
   onClick,
   isPending,
   modalBorderColor,
@@ -93,6 +94,7 @@ export default function CustomModal({
               </Button>
 
               <Button
+                type={btnType}
                 width={"w-fit"}
                 borderColor={"border-green-600"}
                 textColor={"text-green-500"}
