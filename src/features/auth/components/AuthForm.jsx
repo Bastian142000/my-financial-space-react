@@ -11,6 +11,7 @@ export default function AuthForm({
       <div className="flex flex-col items-center gap-5">
         <input
           className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-blue-100"
+          name="email"
           type="email"
           placeholder="Email"
           value={email}
@@ -19,6 +20,7 @@ export default function AuthForm({
 
         <input
           className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-blue-100"
+          name="password"
           type="password"
           placeholder="Password"
           value={password}

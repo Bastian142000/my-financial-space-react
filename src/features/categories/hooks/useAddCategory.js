@@ -6,8 +6,10 @@ export default function useAddCategory() {
   const queryClient = useQueryClient();
   const { mutate: addCategory, isPending } = useMutation({
     mutationFn: addCategoryApi,
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["categories"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      toast.success("Category added successfully");
+    },
     onError: (e) => {
       console.error(e);
       toast.error(e.message);

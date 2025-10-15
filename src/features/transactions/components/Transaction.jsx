@@ -63,24 +63,26 @@ export default function Transaction({ selectedIds, onSelect, transaction }) {
           <CustomModal
             title={"Delete selected transaction?"}
             modalBorderColor={"border-white"}
+            btnType={"submit"}
             btnWidth={"w-fit"}
             btnBorderColor={"border-white"}
             btnTextColor={"text-black"}
             btnHoverBgColor={"hover:bg-red-500"}
             btnHoverTextColor={"hover:text-white"}
-            btnText={<DeleteIcon />}
+            btnText={<DeleteIcon data-cy="delete-transaction" />}
             onClick={() => deleteTransactions({ ids: [transaction.id] })}
           ></CustomModal>
 
           <CustomModal
             title={"Modify transaction"}
             modalBorderColor={"border-gray-300"}
+            btnType={"submit"}
             btnWidth={"w-fit"}
             btnBorderColor={"border-white"}
             btnTextColor={"text-black"}
             btnHoverBgColor={"hover:bg-yellow-500"}
             btnHoverTextColor={"hover:text-white"}
-            btnText={<EditNoteIcon />}
+            btnText={<EditNoteIcon data-cy="update-transaction" />}
             onClick={() => handleEdit(transaction)}
           >
             <TransactionForm

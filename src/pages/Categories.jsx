@@ -34,6 +34,7 @@ export default function Categories() {
           <Button
             height={"h-12"}
             width={"w-fit"}
+            type={"submit"}
             borderColor={"border-green-400"}
             textColor={"text-green-600"}
             hoverBgColor={"hover:bg-green-400"}

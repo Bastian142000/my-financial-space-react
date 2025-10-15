@@ -30,7 +30,10 @@ export default function Category({ category }) {
     deleteCategory({ id: category.id });
   };
   return (
-    <li className="flex items-center justify-between overflow-y-auto rounded-xl border border-gray-200 bg-blue-50 p-5">
+    <li
+      data-cy="category-dynamic-input"
+      className="flex items-center justify-between overflow-y-auto rounded-xl border border-gray-200 bg-blue-50 p-5"
+    >
       {isEditing ? <CategoryForm {...form} /> : category.category_name}
 
       {/* Action buttons */}
@@ -39,6 +42,8 @@ export default function Category({ category }) {
           ""
         ) : (
           <button
+            data-cy="delete-category"
+            type="submit"
             onClick={handleDelete}
             disabled={isDeleting}
             className="cursor-pointer rounded-md p-2 transition-colors duration-300 ease-in-out hover:bg-red-500 hover:text-white"
@@ -55,9 +60,9 @@ export default function Category({ category }) {
             className={`cursor-pointer rounded-md p-2 transition-colors duration-300 ease-in-out hover:text-white ${isEditing ? "hover:bg-green-500" : "hover:bg-yellow-500"}`}
           >
             {isEditing ? (
-              <DoneIcon fontSize="medium" />
+              <DoneIcon data-cy="confirm-update-category" fontSize="medium" />
             ) : (
-              <EditNoteIcon fontSize="medium" />
+              <EditNoteIcon data-cy="update-category" fontSize="medium" />
             )}
           </button>
         )}
