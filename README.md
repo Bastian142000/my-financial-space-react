@@ -62,7 +62,7 @@ npm install
 # Run the development server
 npm run dev
 
-
+```
 # 💰 My Financial Space
 
 ![React](https://img.shields.io/badge/React-19.0-blue?logo=react)
