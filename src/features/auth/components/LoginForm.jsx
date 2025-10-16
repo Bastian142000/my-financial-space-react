@@ -6,8 +6,8 @@ import { useState } from "react";
 import { NavLink } from "react-router";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("test@example.cl");
-  const [password, setPassword] = useState("test123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
