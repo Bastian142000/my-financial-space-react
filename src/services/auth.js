@@ -45,7 +45,7 @@ export async function register({ email, password }) {
 
   if (error) {
     console.error(error);
-    throw new Error("User could not be registered");
+    throw new Error(error.message);
   }
 
   return data;
