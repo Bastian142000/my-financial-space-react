@@ -12,7 +12,7 @@ export default function RegisterForm() {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const { register, isPending, error } = useRegister();
+  const { register, isPending } = useRegister();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,8 +30,6 @@ export default function RegisterForm() {
       onPasswordChange={handlePasswordChange}
       onSubmit={handleSubmit}
     >
-      {error && <span className="text-red-500">{error.message}</span>}
-
       <div className="flex py-4 text-blue-400">
         <NavLink to="/">Already have an account?</NavLink>
       </div>
