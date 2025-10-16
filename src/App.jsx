@@ -3,6 +3,8 @@ import { router } from "./router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
+import { CircularProgress } from "@mui/material";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +36,9 @@ export default function App() {
           },
         }}
       />
-      <RouterProvider router={router} />
+      <Suspense fallback={<CircularProgress color="primary" size={"42"} />}>
+        <RouterProvider router={router} />
+      </Suspense>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
