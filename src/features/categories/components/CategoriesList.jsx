@@ -1,5 +1,5 @@
 import useCategories from "../../../hooks/useCategories";
-import SpinnerMini from "../../../ui/SpinnerMini";
+import LoaderSpinner from "../../../ui/LoaderSpinner/LoaderSpinner";
 import Category from "./Category";
 
 export default function CategoriesList() {
@@ -8,7 +8,7 @@ export default function CategoriesList() {
   const isEmpty = customCategories?.length === 0;
   return (
     <ul className="flex flex-col gap-10">
-      {isPending && <SpinnerMini />}
+      {isPending && <LoaderSpinner size="lg"/>}
       {error && <span>{error}</span>}
       {isEmpty && (
         <span className="flex justify-center text-lg font-semibold">

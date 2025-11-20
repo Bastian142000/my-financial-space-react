@@ -4,6 +4,7 @@ import TransactionForm from "../components/TransactionForm";
 import useAddTransaction from "../hooks/useAddTransaction";
 import useUser from "../../auth/hooks/useUser";
 import useTransactionForm from "../hooks/useTransactionForm";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function AddTransactionModal() {
   const form = useTransactionForm();
@@ -30,12 +31,7 @@ export default function AddTransactionModal() {
       title={"Register a new transaction"}
       modalBorderColor={"border-gray-300"}
       btnText={"Add transaction"}
-      btnType={"submit"}
-      btnWidth={"w-fit"}
-      btnBorderColor={"border-green-400"}
-      btnTextColor={"text-green-600"}
-      btnHoverBgColor={"hover:bg-green-400"}
-      btnHoverTextColor={"hover:text-white"}
+      btnIcon={<AddIcon />}
       isPending={isAdding}
       onClick={handleSubmit}
     >

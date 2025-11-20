@@ -31,7 +31,7 @@ export default function App() {
             overflowWrap: "break-word",
             wordBreak: "break-word",
             whiteSpace: "normal",
-            boxShadow: "8px 8px 20px 2px",
+            boxShadow: "5px 5px 5px #b0b0b0",
             border: "1px solid gray",
           },
         }}

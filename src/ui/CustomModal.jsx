@@ -1,11 +1,10 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "./Button";
+import Button from "./Button/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
-import SpinnerMini from "./SpinnerMini";
 
 const style = {
   position: "absolute",
@@ -22,18 +21,14 @@ const style = {
   overflowY: "auto",
 };
 
-export default function CustomModal({
+function CustomModal({
   title,
   btnText,
-  btnType,
+  btnIcon,
+  btnVariant,
   onClick,
   isPending,
   modalBorderColor,
-  btnWidth,
-  btnBorderColor,
-  btnTextColor,
-  btnHoverBgColor,
-  btnHoverTextColor,
   children,
 }) {
   const [open, setOpen] = useState(false);
@@ -46,15 +41,12 @@ export default function CustomModal({
     <div>
       {/* Open modal */}
       <Button
-        width={btnWidth}
-        borderColor={btnBorderColor}
-        textColor={btnTextColor}
-        hoverBgColor={btnHoverBgColor}
-        hoverTextColor={btnHoverTextColor}
+        label={btnText}
+        icon={btnIcon}
+        variant={btnVariant}
+        size="md"
         onClick={handleOpen}
-      >
-        {btnText}
-      </Button>
+      ></Button>
 
       {/* Modal */}
       <Modal open={open} onClose={handleClose}>
@@ -83,23 +75,17 @@ export default function CustomModal({
             {/* Bottom buttons */}
             <div className="mb-5 flex justify-center gap-5">
               <Button
-                width={"w-20"}
-                borderColor={"border-red-600"}
-                textColor={"text-red-500"}
-                hoverBgColor={"hover:bg-red-600"}
-                hoverTextColor={"hover:text-white"}
+                label={"Cancel"}
+                variant="danger"
+                size="md"
                 onClick={handleClose}
-              >
-                Cancel
-              </Button>
+              ></Button>
 
               <Button
-                type={btnType}
-                width={"w-fit"}
-                borderColor={"border-green-600"}
-                textColor={"text-green-500"}
-                hoverBgColor={"hover:bg-green-600"}
-                hoverTextColor={"hover:text-white"}
+                label={"Confirm"}
+                variant="secondary"
+                size="md"
+                isLoading={isPending}
                 disabled={isPending}
                 onClick={async () => {
                   try {
@@ -109,9 +95,7 @@ export default function CustomModal({
                     console.error(err);
                   }
                 }}
-              >
-                {isPending ? <SpinnerMini /> : "Confirm"}
-              </Button>
+              ></Button>
             </div>
           </div>
         </Box>
@@ -119,3 +103,5 @@ export default function CustomModal({
     </div>
   );
 }
+
+export default CustomModal;

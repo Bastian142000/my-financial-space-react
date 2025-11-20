@@ -1,3 +1,4 @@
+import { TableCell } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import CustomModal from "../../../ui/CustomModal";
@@ -7,7 +8,6 @@ import TransactionForm from "./TransactionForm";
 import useTransactionForm from "../hooks/useTransactionForm";
 import useCategories from "../../../hooks/useCategories";
 import useUpdateTransaction from "../hooks/useUpdateTransaction";
-import { TableCell } from "@mui/material";
 
 export default function Transaction({ selectedIds, onSelect, transaction }) {
   const form = useTransactionForm({
@@ -63,26 +63,16 @@ export default function Transaction({ selectedIds, onSelect, transaction }) {
           <CustomModal
             title={"Delete selected transaction?"}
             modalBorderColor={"border-white"}
-            btnType={"submit"}
-            btnWidth={"w-fit"}
-            btnBorderColor={"border-white"}
-            btnTextColor={"text-black"}
-            btnHoverBgColor={"hover:bg-red-500"}
-            btnHoverTextColor={"hover:text-white"}
-            btnText={<DeleteIcon data-cy="delete-transaction" />}
+            btnIcon={<DeleteIcon data-cy="delete-transaction" />}
+            btnVariant={"danger"}
             onClick={() => deleteTransactions({ ids: [transaction.id] })}
           ></CustomModal>
 
           <CustomModal
             title={"Modify transaction"}
-            modalBorderColor={"border-gray-300"}
-            btnType={"submit"}
-            btnWidth={"w-fit"}
-            btnBorderColor={"border-white"}
-            btnTextColor={"text-black"}
-            btnHoverBgColor={"hover:bg-yellow-500"}
-            btnHoverTextColor={"hover:text-white"}
-            btnText={<EditNoteIcon data-cy="update-transaction" />}
+            modalBorderColor={"border-white"}
+            btnIcon={<EditNoteIcon data-cy="update-transaction" />}
+            btnVariant={"warning"}
             onClick={() => handleEdit(transaction)}
           >
             <TransactionForm

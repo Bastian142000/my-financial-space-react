@@ -1,4 +1,5 @@
-import Button from "../ui/Button";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "../ui/Button/Button";
 import CategoryList from "../features/categories/components/CategoriesList";
 import useCategoryForm from "../features/categories/hooks/useCategoryForm";
 import useAddCategory from "../features/categories/hooks/useAddCategory";
@@ -32,18 +33,16 @@ export default function Categories() {
         <div className="flex h-25 items-center justify-center gap-1 border-b border-gray-300 lg:gap-5">
           <CategoryForm {...form} placeholder={"Category..."} />
           <Button
-            height={"h-12"}
-            width={"w-fit"}
-            type={"submit"}
-            borderColor={"border-green-400"}
-            textColor={"text-green-600"}
-            hoverBgColor={"hover:bg-green-400"}
-            hoverTextColor={"hover:text-white"}
+            data-cy="delete-category"
+            label={"Add"}
+            icon={<AddIcon />}
+            variant="primary"
+            size="md"
+            isLoading={isPending}
             disabled={isPending}
+            type="submit"
             onClick={handleAddCategory}
-          >
-            Add
-          </Button>
+          ></Button>
         </div>
         <div className="mx-auto mt-5 max-h-190 w-10/12 overflow-y-auto">
           <CategoryList />
