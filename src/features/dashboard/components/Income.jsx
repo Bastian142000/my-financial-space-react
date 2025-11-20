@@ -1,8 +1,9 @@
 import SavingsIcon from "@mui/icons-material/Savings";
+import CardLayout from "./CardLayout";
 
 export default function Income({ income }) {
   return (
-    <div className="mt-5 flex h-52 w-full items-center gap-5 rounded-2xl border border-gray-200 bg-white/70 p-8 shadow-lg backdrop-blur-sm lg:w-lg">
+    <CardLayout>
       <div className="rounded-full border border-green-300 bg-green-50 p-5">
         <SavingsIcon fontSize="large" className="text-green-700" />
       </div>
@@ -12,6 +13,6 @@ export default function Income({ income }) {
           ${income.toLocaleString()}
         </p>
       </div>
-    </div>
+    </CardLayout>
   );
 }

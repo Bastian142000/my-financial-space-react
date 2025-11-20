@@ -6,6 +6,7 @@ import useAddCategory from "../features/categories/hooks/useAddCategory";
 import CategoryForm from "../features/categories/components/CategoryForm";
 import useUser from "../features/auth/hooks/useUser";
 import toast from "react-hot-toast";
+import BaseLayout from "../ui/BaseLayout/BaseLayout";
 
 export default function Categories() {
   const form = useCategoryForm();
@@ -20,21 +21,15 @@ export default function Categories() {
     form.reset();
   };
   return (
-    <div className="mx-auto mt-5 flex h-120 w-11/12 max-w-screen flex-col overflow-x-auto rounded-xl shadow-sm lg:h-full lg:w-10/12 lg:overflow-x-hidden lg:border lg:border-gray-300">
-      {/* Title and Subtitle */}
-      <div className="flex w-12/12 flex-col gap-3 overflow-auto text-2xl lg:m-7 lg:px-7">
-        <h1 className="font-semibold">Add new categories</h1>
-        <h2 className="text-base text-gray-600">
-          Here you can register custom categories
-        </h2>
-      </div>
-
+    <BaseLayout
+      title={"Add new categories"}
+      subtitle={"Here you can register custom categories"}
+    >
       {/* Content */}
-      <div className="mx-auto flex h-10/12 max-h-10/12 w-12/12 flex-col overflow-y-auto rounded-2xl lg:w-8/12 lg:border lg:border-gray-300">
-        <div className="flex items-end justify-center gap-1 border-b border-gray-300 p-5 lg:gap-5">
+      <div className="mx-auto flex h-full w-12/12 flex-col overflow-y-auto rounded-2xl border border-gray-300">
+        <div className="flex flex-col items-center justify-center gap-1 border-b border-gray-300 p-5 lg:flex-row lg:items-end lg:gap-5">
           <CategoryForm {...form} placeholder={"Category..."} />
           <Button
-            data-cy="delete-category"
             label={"Add"}
             icon={<AddIcon />}
             variant="primary"
@@ -49,6 +44,6 @@ export default function Categories() {
           <CategoryList />
         </div>
       </div>
-    </div>
+    </BaseLayout>
   );
 }

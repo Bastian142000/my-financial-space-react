@@ -2,7 +2,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import useUser from "../features/auth/hooks/useUser";
 import useLogout from "../features/auth/hooks/useLogout";
-import SpinnerMini from "./SpinnerMini";
+import LoaderSpinner from "./LoaderSpinner/LoaderSpinner";
 import { useState, useRef, useEffect } from "react";
 
 export default function Navbar() {
@@ -57,7 +57,7 @@ export default function Navbar() {
                   onClick={logout}
                   disabled={isPending}
                 >
-                  {isPending ? <SpinnerMini /> : "Logout"}
+                  {isPending ? <LoaderSpinner size="sm" /> : "Logout"}
                 </button>
               </li>
             </ul>

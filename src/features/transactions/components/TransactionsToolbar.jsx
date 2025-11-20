@@ -4,7 +4,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 export default function TransactionsToolbar({ selectedCount, onDelete }) {
   return (
-    <div className="mx-auto flex w-fit gap-3 justify-end pt-5 lg:w-11/12">
+    <div className="flex flex-col lg:flex-row gap-3">
       <AddTransactionModal />
 
       {selectedCount > 1 && (

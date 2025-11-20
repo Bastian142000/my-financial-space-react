@@ -1,7 +1,7 @@
 import supabase from "./supabase";
 
 export async function fetchTransactions({ user_id, page }) {
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const from = (page - 1) * itemsPerPage;
   const to = from + itemsPerPage - 1;
 

@@ -1,7 +1,7 @@
 import { useNavigation, Outlet, useNavigate } from "react-router";
 import { useEffect } from "react";
 import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 import useUser from "../features/auth/hooks/useUser";
 import LoaderSpinner from "./LoaderSpinner/LoaderSpinner";
 
@@ -18,7 +18,7 @@ export default function ProtectedPage() {
   if (isPending)
     return (
       <div className="absolute top-6/12 right-6/12">
-        <LoaderSpinner color="primary" />
+        <LoaderSpinner color="primary" size="lg"/>
       </div>
     );
 
