@@ -16,6 +16,7 @@ export default function AuthForm({
           placeholder="Email"
           value={email}
           onChange={onEmailChange}
+          required
         ></input>
 
         <input
@@ -25,6 +26,7 @@ export default function AuthForm({
           placeholder="Password"
           value={password}
           onChange={onPasswordChange}
+          required
         ></input>
       </div>
       {children}

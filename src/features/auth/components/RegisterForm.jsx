@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
-import Button from "../../../ui/Button";
+import Button from "../../../ui/Button/Button";
 import AuthForm from "./AuthForm";
 import useRegister from "../hooks/useRegister";
-import SpinnerMini from "../../../ui/SpinnerMini";
 
-export default function RegisterForm() {
+function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -35,16 +34,15 @@ export default function RegisterForm() {
       </div>
 
       <Button
-        type={"submit"}
-        width={"w-45"}
-        borderColor={"border-blue-300"}
-        textColor={"text-blue-600"}
-        hoverBgColor={"hover:bg-blue-300"}
-        hoverTextColor={"hover:text-white"}
+        label={"Register"}
+        variant="primary"
+        size="md"
+        fullWidth={true}
+        isLoading={isPending}
         disabled={isPending}
-      >
-        {isPending ? <SpinnerMini /> : "Register"}
-      </Button>
+      ></Button>
     </AuthForm>
   );
 }
+
+export default RegisterForm;

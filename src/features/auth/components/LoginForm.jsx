@@ -1,11 +1,11 @@
-import Button from "../../../ui/Button";
-import AuthForm from "./AuthForm";
-import SpinnerMini from "../../../ui/SpinnerMini";
-import useLogin from "../hooks/useLogin";
 import { useState } from "react";
 import { NavLink } from "react-router";
+import Button from "../../../ui/Button/Button";
+import AuthForm from "./AuthForm";
+import useLogin from "../hooks/useLogin";
+import toast from "react-hot-toast";
 
-export default function LoginForm() {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,7 +17,7 @@ export default function LoginForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!email || !password) return;
+    if (!email || !password) return toast.error("Credentials needed!");
 
     login({ email, password });
   }
@@ -35,15 +35,15 @@ export default function LoginForm() {
       </div>
 
       <Button
-        width={"w-45"}
-        borderColor={"border-blue-300"}
-        textColor={"text-blue-600"}
-        hoverBgColor={"hover:bg-blue-300"}
-        hoverTextColor={"hover:text-white"}
+        label={"Login"}
+        variant="primary"
+        size="md"
+        fullWidth={true}
+        isLoading={isPending}
         disabled={isPending}
-      >
-        {isPending ? <SpinnerMini /> : "Login"}
-      </Button>
+      ></Button>
     </AuthForm>
   );
 }
+
+export default LoginForm;
