@@ -1,9 +1,9 @@
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
-import useUser from "../features/auth/hooks/useUser";
-import { CircularProgress } from "@mui/material";
 import { useNavigation, Outlet, useNavigate } from "react-router";
 import { useEffect } from "react";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar/Sidebar";
+import useUser from "../features/auth/hooks/useUser";
+import LoaderSpinner from "./LoaderSpinner/LoaderSpinner";
 
 export default function ProtectedPage() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function ProtectedPage() {
   if (isPending)
     return (
       <div className="absolute top-6/12 right-6/12">
-        <CircularProgress color="primary" />
+        <LoaderSpinner color="primary" size="lg"/>
       </div>
     );
 
@@ -27,7 +27,7 @@ export default function ProtectedPage() {
       <div className="app-container">
         {routeLoading && (
           <div className="absolute top-6/12 right-6/12">
-            <CircularProgress color="secondary" />
+            <LoaderSpinner color="secondary" />
           </div>
         )}
 

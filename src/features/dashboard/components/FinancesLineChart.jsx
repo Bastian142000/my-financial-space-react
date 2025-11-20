@@ -16,7 +16,7 @@ export default function FinancesLineChart({ transactions }) {
   const data = groupByMonth(transactions, prevYear);
   return (
     <>
-      <div className="flex justify-end gap-5">
+      <div className="flex justify-end gap-5 p-2">
         <button
           className={`cursor-pointer rounded-xl border border-gray-300 p-3 shadow-xl transition-transform duration-300 ease-in-out ${prevYear ? "scale-90 bg-blue-100" : ""}`}
           onClick={() => setPrevYear(true)}

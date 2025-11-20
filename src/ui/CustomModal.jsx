@@ -13,11 +13,11 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: { xs: "90%", sm: 500 },
   maxHeight: "90vh",
-  borderRadius: "2rem",
+  borderRadius: "0.5rem",
   bgcolor: "background.paper",
   border: "1px solid #f6f6f6",
-  boxShadow: 24,
-  p: 4,
+  boxShadow: 20,
+  p: 3,
   overflowY: "auto",
 };
 
@@ -28,7 +28,6 @@ function CustomModal({
   btnVariant,
   onClick,
   isPending,
-  modalBorderColor,
   children,
 }) {
   const [open, setOpen] = useState(false);
@@ -51,29 +50,47 @@ function CustomModal({
       {/* Modal */}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          {/* Title and upper close button */}
+          {/* Title and Upper close button */}
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mb: 2,
+              mb: 1,
+              fontWeight: "600",
             }}
           >
             <Typography id="modal-modal-title" variant="h6" component="h2">
               {title}
             </Typography>
-            <IconButton onClick={handleClose}>
-              <CloseIcon />
+            <IconButton
+              sx={{
+                border: "1px solid #d1d0d1",
+                borderRadius: "8px",
+                padding: "8px",
+                transition: "all 0.2s ease",
+                ":hover": {
+                  backgroundColor: "#f5f5f5",
+                  borderColor: "#a0a0a0",
+                  transform: "scale(1.05)",
+                },
+                ":active": {
+                  transform: "scale(0.95)",
+                  backgroundColor: "#e8e8e8",
+                },
+              }}
+              onClick={handleClose}
+            >
+              <CloseIcon sx={{ fontSize: "20px", color: "#666" }} />
             </IconButton>
           </Box>
 
           {/* Content */}
-          <div className={`rounded-2xl border ${modalBorderColor}`}>
+          <div>
             {children}
 
             {/* Bottom buttons */}
-            <div className="mb-5 flex justify-center gap-5">
+            <div className="m-2 flex justify-center gap-5">
               <Button
                 label={"Cancel"}
                 variant="danger"
