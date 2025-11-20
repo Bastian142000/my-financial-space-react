@@ -5,6 +5,7 @@ import useCategoryForm from "../features/categories/hooks/useCategoryForm";
 import useAddCategory from "../features/categories/hooks/useAddCategory";
 import CategoryForm from "../features/categories/components/CategoryForm";
 import useUser from "../features/auth/hooks/useUser";
+import toast from "react-hot-toast";
 
 export default function Categories() {
   const form = useCategoryForm();
@@ -14,7 +15,7 @@ export default function Categories() {
   const { user } = useUser();
 
   const handleAddCategory = () => {
-    if (form.category === "") return;
+    if (form.category === "") return toast.error("Category can't be empty");
     addCategory({ category: form.category, user_id: user.id });
     form.reset();
   };
@@ -30,7 +31,7 @@ export default function Categories() {
 
       {/* Content */}
       <div className="mx-auto flex h-10/12 max-h-10/12 w-12/12 flex-col overflow-y-auto rounded-2xl lg:w-8/12 lg:border lg:border-gray-300">
-        <div className="flex h-25 items-center justify-center gap-1 border-b border-gray-300 lg:gap-5">
+        <div className="flex items-end justify-center gap-1 border-b border-gray-300 p-5 lg:gap-5">
           <CategoryForm {...form} placeholder={"Category..."} />
           <Button
             data-cy="delete-category"

@@ -1,5 +1,6 @@
-import SpinnerMini from "../../../ui/SpinnerMini";
 import { validateNumber } from "../../../utils/validateInputNumber";
+import InputText from "../../../ui/InputText/InputText";
+import SpinnerMini from "../../../ui/SpinnerMini";
 
 export default function TransactionForm({
   categories,
@@ -23,13 +24,11 @@ export default function TransactionForm({
     validateNumber(e, setAmount);
   };
   return (
-    <form onSubmit={onSubmit} className="pt-10">
-      <div className="flex flex-col items-center gap-5">
+    <form onSubmit={onSubmit} className="flex justify-center p-4">
+      <div className="flex flex-col items-center justify-center gap-5 lg:w-[60%]">
         {/* Input Description */}
-        <label htmlFor="description" className="w-68">
-          Description
-        </label>
-        <input
+        <InputText
+          label={"Description"}
           name="description"
           id="description"
           type="text"
@@ -37,53 +36,57 @@ export default function TransactionForm({
           value={description}
           onChange={handleDescriptionChange}
           maxLength={50}
-          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
-        ></input>
+        />
 
-        {/* Form group */}
-        <div className="inline-flex gap-5">
-          {/* Input Category */}
-          <div className="flex flex-col gap-5">
-            <label htmlFor="category">Category</label>
-            <select
-              name="category"
-              id="category"
-              value={categoryId}
-              onChange={handleCategoryChange}
-              className="w-32 rounded-xl border border-gray-200 p-2"
-            >
-              {isPending && <SpinnerMini />}
-              {error && <span className="text-red-500">{error}</span>}
-              {categories &&
-                categories.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.category_name}
-                  </option>
-                ))}
-            </select>
-          </div>
+        {/* Input Category */}
+        <div className="flex w-full lg:w-[95%] flex-col">
+          <label
+            htmlFor="category"
+            className="mb-2 text-sm font-medium text-gray-700"
+          >
+            Category
+          </label>
+          <select
+            name="category"
+            id="category"
+            value={categoryId}
+            onChange={handleCategoryChange}
+            className="h-10 rounded-md border border-gray-400 px-4 text-base font-medium shadow-sm ring-blue-400 transition-colors duration-300 ease-linear focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isPending && <SpinnerMini />}
+            {error && <span className="text-red-500">{error}</span>}
+            {categories &&
+              categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.category_name}
+                </option>
+              ))}
+          </select>
+        </div>
 
-          {/* Input Type */}
-          <div className="flex flex-col gap-5">
-            <label htmlFor="type">Type</label>
-            <select
-              name="type"
-              id="type"
-              value={type}
-              onChange={handleTypeChange}
-              className="w-32 rounded-xl border border-gray-200 p-2"
-            >
-              <option value={"INCOME"}>INCOME</option>
-              <option value={"EXPENSE"}>EXPENSE</option>
-            </select>
-          </div>
+        {/* Input Type */}
+        <div className="flex w-full lg:w-[95%] flex-col">
+          <label
+            htmlFor="type"
+            className="mb-2 text-sm font-medium text-gray-700"
+          >
+            Type
+          </label>
+          <select
+            name="type"
+            id="type"
+            value={type}
+            onChange={handleTypeChange}
+            className="h-10 w-full rounded-md border border-gray-400 px-4 text-base font-medium shadow-sm ring-blue-400 transition-colors duration-300 ease-linear focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <option value={"INCOME"}>INCOME</option>
+            <option value={"EXPENSE"}>EXPENSE</option>
+          </select>
         </div>
 
         {/* Input Amount */}
-        <label htmlFor="amount" className="w-68">
-          Amount
-        </label>
-        <input
+        <InputText
+          label={"Amount"}
           name="amount"
           id="amount"
           type="text"
@@ -92,8 +95,7 @@ export default function TransactionForm({
           placeholder="Amount"
           value={amount}
           onChange={handleAmountChange}
-          className="w-70 rounded-2xl border border-gray-200 p-3 outline-none focus:ring-4 focus:ring-purple-100"
-        ></input>
+        />
       </div>
 
       {/* Content */}
